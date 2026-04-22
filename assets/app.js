@@ -76,3 +76,21 @@ function escapeHtml(value) {
 function slugToTitle(slug) {
   return String(slug || '').replace(/-/g, ' ').replace(/\b\w/g, m => m.toUpperCase());
 }
+
+function groupBy(items, getKey) {
+  const map = new Map();
+
+  items.forEach((item) => {
+    const key = getKey(item);
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+
+    map.get(key).push(item);
+  });
+
+  return Array.from(map, ([category, groupItems]) => ({
+    category,
+    items: groupItems
+  }));
+}

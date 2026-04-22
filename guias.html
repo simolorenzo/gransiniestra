@@ -7,53 +7,84 @@
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="container inner">
-      <a class="brand" href="./index.html">
-        <span class="brand-mark">GS</span>
-        <span>Gran Siniestra</span>
-      </a>
-      <nav class="nav">
-        <a href="./index.html">Portada</a>
-        <a href="./mapa.html">Mapa</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container page-section">
-    <div class="section-head">
-      <div>
-        <div class="section-tag">Archivo</div>
-        <h1>Guias de la campaña</h1>
+  <main class="guide-shell guide-shell-index">
+    <aside class="guide-sidebar">
+      <div class="guide-sidebar-inner">
+        <div class="guide-sidebar-top">
+          <a class="guide-brand" href="./index.html">
+            <span class="guide-brand-mark">GS</span>
+            <span>Gran Siniestra</span>
+          </a>
+          <a class="guide-mini-link" href="./mapa.html">Ir al mapa</a>
+        </div>
+        <div id="guideIndexNav" class="guide-sidebar-nav"></div>
       </div>
-      <p class="muted">
-        Entradas breves, listas para consultar en mesa. El listado se genera desde
-        <code>data/guias.csv</code> y filtra por titulo, categoria o descripcion.
-      </p>
-    </div>
+    </aside>
 
-    <div class="toolbar">
-      <div class="field">
-        <input
-          id="searchInput"
-          class="input"
-          type="search"
-          placeholder="Buscar una ciudad, una faccion o un rumor"
-        />
+    <section class="guide-stage">
+      <header class="guide-stage-head">
+        <a class="guide-back-link" href="./index.html">Volver a portada</a>
+        <nav class="guide-stage-links">
+          <a href="./mapa.html">Mapa</a>
+          <a href="./index.html">Inicio</a>
+        </nav>
+      </header>
+
+      <div class="guide-stage-body">
+        <section class="guide-paper guide-index-paper">
+          <header class="guide-paper-head">
+            <div class="guide-kicker">Archivo</div>
+            <h1>Guias de la campaña</h1>
+            <p>
+              Un indice de consulta rapida con tono de dossier. Filtra por ciudad, faccion,
+              region o cualquier termino recogido en el resumen.
+            </p>
+          </header>
+
+          <div class="guide-toolbar">
+            <div class="field">
+              <input
+                id="searchInput"
+                class="input"
+                type="search"
+                placeholder="Buscar una ciudad, una faccion o un rumor"
+              />
+            </div>
+            <div id="resultsMeta" class="guide-results-meta">Cargando archivo</div>
+          </div>
+
+          <section id="guideList" class="guide-index-list"></section>
+        </section>
       </div>
-      <div id="resultsMeta" class="toolbar-note chip">Cargando archivo</div>
-    </div>
-
-    <section id="guideList" class="list-grid"></section>
+    </section>
   </main>
 
   <script src="./assets/app.js"></script>
   <script>
+    function buildIndexSidebar(groups) {
+      return groups.map((group) => `
+        <section class="guide-nav-group">
+          <h2>${escapeHtml(group.category)}</h2>
+          <ul>
+            ${group.items.map((item) => `
+              <li>
+                <a href="./guia.html?slug=${encodeURIComponent(item.slug)}">${escapeHtml(item.title)}</a>
+              </li>
+            `).join('')}
+          </ul>
+        </section>
+      `).join('');
+    }
+
     async function init() {
       const guides = await fetchCsv('./data/guias.csv');
       const list = document.getElementById('guideList');
       const searchInput = document.getElementById('searchInput');
       const resultsMeta = document.getElementById('resultsMeta');
+      const guideIndexNav = document.getElementById('guideIndexNav');
+      const groupedGuides = groupBy(guides, (item) => item.category || 'Sin categoria');
+
+      guideIndexNav.innerHTML = buildIndexSidebar(groupedGuides);
 
       function render() {
         const query = searchInput.value.trim().toLowerCase();
@@ -70,10 +101,10 @@
         }
 
         list.innerHTML = filtered.map((guide) => `
-          <a class="guide-card" href="./guia.html?slug=${encodeURIComponent(guide.slug)}">
-            <span class="chip">${escapeHtml(guide.category || 'Sin categoria')}</span>
+          <a class="guide-index-row" href="./guia.html?slug=${encodeURIComponent(guide.slug)}">
+            <span>${escapeHtml(guide.category || 'Sin categoria')}</span>
             <strong>${escapeHtml(guide.title)}</strong>
-            <p class="muted">${escapeHtml(guide.description || 'Sin descripcion breve.')}</p>
+            <p>${escapeHtml(guide.description || 'Sin descripcion breve.')}</p>
           </a>
         `).join('');
       }

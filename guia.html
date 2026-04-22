@@ -7,86 +7,144 @@
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="container inner">
-      <a class="brand" href="./index.html">
-        <span class="brand-mark">GS</span>
-        <span>Gran Siniestra</span>
-      </a>
-      <nav class="nav">
-        <a href="./guias.html">Archivo</a>
-        <a href="./mapa.html">Mapa</a>
-      </nav>
-    </div>
-  </header>
+  <main id="guideApp" class="guide-shell loading">
+    <aside class="guide-sidebar">
+      <div class="guide-sidebar-inner">
+        <div class="guide-sidebar-top">
+          <a class="guide-brand" href="./index.html">
+            <span class="guide-brand-mark">GS</span>
+            <span>Gran Siniestra</span>
+          </a>
+          <a class="guide-mini-link" href="./guias.html">Archivo completo</a>
+        </div>
+        <div id="guideSidebarNav" class="guide-sidebar-nav"></div>
+      </div>
+    </aside>
 
-  <main class="container">
-    <a class="back-link" href="./guias.html">Volver al archivo</a>
-    <div id="article" class="split-layout"></div>
+    <section class="guide-stage">
+      <header class="guide-stage-head">
+        <a class="guide-back-link" href="./guias.html">Volver al archivo</a>
+        <nav class="guide-stage-links">
+          <a href="./mapa.html">Mapa</a>
+          <a href="./index.html">Portada</a>
+        </nav>
+      </header>
+
+      <div class="guide-stage-body">
+        <div id="article"></div>
+      </div>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="./assets/app.js"></script>
   <script>
+    function slugifyFragment(value) {
+      return String(value || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    function buildSidebar(groups, currentSlug) {
+      return groups.map((group) => `
+        <section class="guide-nav-group">
+          <h2>${escapeHtml(group.category)}</h2>
+          <ul>
+            ${group.items.map((item) => `
+              <li>
+                <a class="${item.slug === currentSlug ? 'is-active' : ''}" href="./guia.html?slug=${encodeURIComponent(item.slug)}">
+                  ${escapeHtml(item.title)}
+                </a>
+              </li>
+            `).join('')}
+          </ul>
+        </section>
+      `).join('');
+    }
+
+    function buildGuideMarkup(guide, markdown) {
+      const html = marked.parse(markdown);
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = html;
+
+      const sectionLinks = [];
+      const headings = wrapper.querySelectorAll('h2');
+
+      headings.forEach((heading, index) => {
+        const id = slugifyFragment(heading.textContent) || `seccion-${index + 1}`;
+        heading.id = id;
+        sectionLinks.push({
+          id,
+          label: heading.textContent.trim()
+        });
+      });
+
+      return {
+        sectionLinks,
+        bodyHtml: wrapper.innerHTML,
+        layout: `
+          <article class="guide-paper">
+            <header class="guide-paper-head">
+              <div class="guide-kicker">${escapeHtml(guide?.category || 'Entrada')}</div>
+              <h1>${escapeHtml(guide?.title || 'Entrada')}</h1>
+              ${guide?.description ? `<p>${escapeHtml(guide.description)}</p>` : ''}
+            </header>
+            <div class="guide-section-tabs">
+              ${sectionLinks.length ? sectionLinks.map((section) => `
+                <a href="#${escapeHtml(section.id)}">${escapeHtml(section.label)}</a>
+              `).join('') : '<span>Sin secciones internas</span>'}
+            </div>
+            <div class="guide-paper-divider"></div>
+            <div class="guide-body markdown-body">${wrapper.innerHTML}</div>
+          </article>
+        `
+      };
+    }
+
     async function init() {
       const slug = getParam('slug');
       const article = document.getElementById('article');
+      const sidebarNav = document.getElementById('guideSidebarNav');
+      const guideApp = document.getElementById('guideApp');
 
       if (!slug) {
         article.innerHTML = `
-          <article class="article">
-            <div class="article-head">
-              <div class="section-tag">Entrada</div>
+          <article class="guide-paper">
+            <header class="guide-paper-head">
+              <div class="guide-kicker">Entrada</div>
               <h1>Falta la referencia</h1>
-              <p class="muted">Abre la guia desde el archivo o desde un marcador del mapa.</p>
-            </div>
+              <p>Abre la guia desde el archivo o desde un marcador del mapa.</p>
+            </header>
           </article>
         `;
         return;
       }
 
       const guides = await fetchCsv('./data/guias.csv');
+      const groupedGuides = groupBy(guides, (item) => item.category || 'Sin categoria');
+      sidebarNav.innerHTML = buildSidebar(groupedGuides, slug);
+
       const guide = guides.find((item) => item.slug === slug);
       const markdown = await fetchText(`./content/guias/${slug}.md`);
+      const rendered = buildGuideMarkup(guide, markdown);
 
-      article.innerHTML = `
-        <article class="article">
-          <div class="article-head">
-            <div class="section-tag">Entrada del atlas</div>
-            <h1>${escapeHtml(guide?.title || slugToTitle(slug))}</h1>
-            ${guide?.description ? `<p class="muted">${escapeHtml(guide.description)}</p>` : ''}
-            <div class="article-divider"></div>
-          </div>
-          <div class="markdown-body">${marked.parse(markdown)}</div>
-        </article>
-        <aside class="detail-panel">
-          <dl>
-            <div>
-              <dt>Categoria</dt>
-              <dd>${escapeHtml(guide?.category || 'Sin categoria')}</dd>
-            </div>
-            <div>
-              <dt>Slug</dt>
-              <dd><code>${escapeHtml(slug)}</code></dd>
-            </div>
-            <div>
-              <dt>Uso</dt>
-              <dd>La entrada puede consultarse sola o desde el mapa, segun como prefieras dirigir la sesion.</dd>
-            </div>
-          </dl>
-        </aside>
-      `;
+      article.innerHTML = rendered.layout;
+      document.title = `${guide?.title || slugToTitle(slug)} | Gran Siniestra`;
+      guideApp.classList.remove('loading');
     }
 
     init().catch((error) => {
       console.error(error);
       document.getElementById('article').innerHTML = `
-        <article class="article">
-          <div class="article-head">
-            <div class="section-tag">Error</div>
+        <article class="guide-paper">
+          <header class="guide-paper-head">
+            <div class="guide-kicker">Error</div>
             <h1>No se pudo abrir esta entrada</h1>
-            <p class="muted">Revisa que el slug exista en el CSV y que el archivo Markdown este disponible.</p>
-          </div>
+            <p>Revisa que el slug exista en el CSV y que el archivo Markdown este disponible.</p>
+          </header>
         </article>
       `;
     });
