@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#172030"/>
+      <stop offset="100%" stop-color="#0c111a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <path d="M90 170 C220 110, 340 120, 420 210 C470 270, 520 290, 585 260 C650 230, 760 230, 860 290 C930 330, 1020 340, 1110 290 L1110 610 L90 610 Z" fill="#243449"/>
+  <path d="M145 250 C230 215, 310 220, 385 270 C430 300, 470 330, 530 320 C610 305, 690 300, 760 340 C840 385, 930 390, 1040 350 L1040 560 L145 560 Z" fill="#314761"/>
+  <circle cx="389" cy="337" r="22" fill="#d0a85c"/>
+  <circle cx="734" cy="244" r="22" fill="#d0a85c"/>
+  <text x="40" y="58" fill="#e9edf3" font-size="34" font-family="system-ui, sans-serif">Mapa placeholder</text>
+  <text x="40" y="95" fill="#aab4c3" font-size="20" font-family="system-ui, sans-serif">Sustituye este SVG por vuestro mapa real</text>
+</svg>

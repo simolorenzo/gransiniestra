@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guía</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #181c23;
+      --text: #e9edf3;
+      --muted: #aab4c3;
+      --accent: #d0a85c;
+      --border: #2a313d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    article {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    h1, h2, h3 { line-height: 1.2; }
+
+    p, li {
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    .meta {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .cover { margin: 0 0 24px; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    pre {
+      overflow: auto;
+      padding: 16px;
+      border-radius: 12px;
+      background: #11151c;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="./index.html">← Volver al mapa</a>
+    <article id="app">Cargando guía…</article>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    function getSlug() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('slug');
+    }
+
+    function parseFrontmatter(raw) {
+      if (!raw.startsWith('---')) {
+        return { meta: {}, body: raw };
+      }
+
+      const parts = raw.split('---');
+      if (parts.length < 3) {
+        return { meta: {}, body: raw };
+      }
+
+      const yamlBlock = parts[1].trim();
+      const body = parts.slice(2).join('---').trim();
+
+      const meta = {};
+      yamlBlock.split('\n').forEach((line) => {
+        const idx = line.indexOf(':');
+        if (idx === -1) return;
+        const key = line.slice(0, idx).trim();
+        const value = line.slice(idx + 1).trim().replace(/^"|"$/g, '');
+        meta[key] = value;
+      });
+
+      return { meta, body };
+    }
+
+    async function init() {
+      const slug = getSlug();
+      const app = document.getElementById('app');
+
+      if (!slug) {
+        app.innerHTML = '<h1>Falta el slug</h1>';
+        return;
+      }
+
+      const res = await fetch(`./content/guias/${slug}.md`);
+      if (!res.ok) {
+        app.innerHTML = '<h1>Guía no encontrada</h1>';
+        return;
+      }
+
+      const raw = await res.text();
+      const { meta, body } = parseFrontmatter(raw);
+
+      app.innerHTML = `
+        <h1>${meta.title || slug}</h1>
+        ${meta.description ? `<p class="meta">${meta.description}</p>` : ''}
+        ${meta.cover ? `<p class="cover"><img src="${meta.cover}" alt="${meta.title || slug}"></p>` : ''}
+        <div class="content">${marked.parse(body)}</div>
+      `;
+    }
+
+    init().catch((error) => {
+      console.error(error);
+      document.getElementById('app').innerHTML = '<h1>Error cargando la guía</h1>';
+    });
+  </script>
+</body>
+</html>

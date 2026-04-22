@@ -1,0 +1,46 @@
+backend:
+  name: github
+  repo: simolorenzo/gransiniestra
+  branch: main
+
+site_url: https://simolorenzo.github.io/gransiniestra
+display_url: https://simolorenzo.github.io/gransiniestra
+
+media_folder: "uploads"
+public_folder: "/gransiniestra/uploads"
+
+collections:
+  - name: "guias"
+    label: "Guías"
+    folder: "content/guias"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descripción corta", name: "description", widget: "text", required: false }
+      - { label: "Imagen de portada", name: "cover", widget: "image", required: false }
+      - { label: "Contenido", name: "body", widget: "markdown" }
+
+  - name: "mapa"
+    label: "Mapa"
+    files:
+      - label: "Datos del mapa"
+        name: "datos_mapa"
+        file: "data/mapa.json"
+        fields:
+          - { label: "Título", name: "title", widget: "string", required: false }
+          - { label: "Imagen del mapa", name: "image", widget: "image" }
+          - label: "Lugares"
+            name: "locations"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Nombre", name: "name", widget: "string" }
+              - { label: "Tipo", name: "type", widget: "select", options: ["ciudad", "region", "mazmorra", "faccion", "otro"] }
+              - { label: "Posición X (%)", name: "x", widget: "number", value_type: "float", min: 0, max: 100, step: 0.1 }
+              - { label: "Posición Y (%)", name: "y", widget: "number", value_type: "float", min: 0, max: 100, step: 0.1 }
+              - { label: "Extracto", name: "excerpt", widget: "text", required: false }
+              - { label: "Slug de la guía", name: "guideSlug", widget: "string" }
