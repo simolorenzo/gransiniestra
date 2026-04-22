@@ -3,23 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guía</title>
+  <title>Entrada | Gran Siniestra</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container inner">
-      <a class="brand" href="./index.html">Atlas del rol</a>
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">GS</span>
+        <span>Gran Siniestra</span>
+      </a>
       <nav class="nav">
-        <a href="./guias.html">Guías</a>
+        <a href="./guias.html">Archivo</a>
         <a href="./mapa.html">Mapa</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <a class="back-link" href="./guias.html">← Volver al índice de guías</a>
-    <article id="article" class="article">Cargando guía…</article>
+    <a class="back-link" href="./guias.html">Volver al archivo</a>
+    <div id="article" class="split-layout"></div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -30,26 +33,62 @@
       const article = document.getElementById('article');
 
       if (!slug) {
-        article.innerHTML = '<h1>Falta el slug</h1><p class="muted">Abre la guía desde el índice.</p>';
+        article.innerHTML = `
+          <article class="article">
+            <div class="article-head">
+              <div class="section-tag">Entrada</div>
+              <h1>Falta la referencia</h1>
+              <p class="muted">Abre la guia desde el archivo o desde un marcador del mapa.</p>
+            </div>
+          </article>
+        `;
         return;
       }
 
       const guides = await fetchCsv('./data/guias.csv');
-      const guide = guides.find(item => item.slug === slug);
+      const guide = guides.find((item) => item.slug === slug);
       const markdown = await fetchText(`./content/guias/${slug}.md`);
 
       article.innerHTML = `
-        <h1>${escapeHtml(guide?.title || slugToTitle(slug))}</h1>
-        ${guide?.category ? `<p class="muted">${escapeHtml(guide.category)}</p>` : ''}
-        ${guide?.description ? `<p>${escapeHtml(guide.description)}</p>` : ''}
-        <hr style="border:0;border-top:1px solid var(--border);margin:20px 0;" />
-        <div class="markdown-body">${marked.parse(markdown)}</div>
+        <article class="article">
+          <div class="article-head">
+            <div class="section-tag">Entrada del atlas</div>
+            <h1>${escapeHtml(guide?.title || slugToTitle(slug))}</h1>
+            ${guide?.description ? `<p class="muted">${escapeHtml(guide.description)}</p>` : ''}
+            <div class="article-divider"></div>
+          </div>
+          <div class="markdown-body">${marked.parse(markdown)}</div>
+        </article>
+        <aside class="detail-panel">
+          <dl>
+            <div>
+              <dt>Categoria</dt>
+              <dd>${escapeHtml(guide?.category || 'Sin categoria')}</dd>
+            </div>
+            <div>
+              <dt>Slug</dt>
+              <dd><code>${escapeHtml(slug)}</code></dd>
+            </div>
+            <div>
+              <dt>Uso</dt>
+              <dd>La entrada puede consultarse sola o desde el mapa, segun como prefieras dirigir la sesion.</dd>
+            </div>
+          </dl>
+        </aside>
       `;
     }
 
-    init().catch(error => {
+    init().catch((error) => {
       console.error(error);
-      document.getElementById('article').innerHTML = '<h1>Error</h1><p>No se pudo cargar esta guía.</p>';
+      document.getElementById('article').innerHTML = `
+        <article class="article">
+          <div class="article-head">
+            <div class="section-tag">Error</div>
+            <h1>No se pudo abrir esta entrada</h1>
+            <p class="muted">Revisa que el slug exista en el CSV y que el archivo Markdown este disponible.</p>
+          </div>
+        </article>
+      `;
     });
   </script>
 </body>

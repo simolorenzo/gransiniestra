@@ -3,28 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Índice de guías</title>
+  <title>Archivo | Gran Siniestra</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container inner">
-      <a class="brand" href="./index.html">Atlas del rol</a>
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">GS</span>
+        <span>Gran Siniestra</span>
+      </a>
       <nav class="nav">
-        <a href="./index.html">Inicio</a>
+        <a href="./index.html">Portada</a>
         <a href="./mapa.html">Mapa</a>
       </nav>
     </div>
   </header>
 
   <main class="container page-section">
-    <h1>Índice de guías</h1>
-    <p class="muted">Este listado sale de <code>data/guias.csv</code>.</p>
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Archivo</div>
+        <h1>Guias de la campaña</h1>
+      </div>
+      <p class="muted">
+        Entradas breves, listas para consultar en mesa. El listado se genera desde
+        <code>data/guias.csv</code> y filtra por titulo, categoria o descripcion.
+      </p>
+    </div>
 
     <div class="toolbar">
       <div class="field">
-        <input id="searchInput" class="input" type="search" placeholder="Buscar por título o categoría" />
+        <input
+          id="searchInput"
+          class="input"
+          type="search"
+          placeholder="Buscar una ciudad, una faccion o un rumor"
+        />
       </div>
+      <div id="resultsMeta" class="toolbar-note chip">Cargando archivo</div>
     </div>
 
     <section id="guideList" class="list-grid"></section>
@@ -36,24 +53,27 @@
       const guides = await fetchCsv('./data/guias.csv');
       const list = document.getElementById('guideList');
       const searchInput = document.getElementById('searchInput');
+      const resultsMeta = document.getElementById('resultsMeta');
 
       function render() {
         const query = searchInput.value.trim().toLowerCase();
-        const filtered = guides.filter(guide => {
-          const hay = `${guide.title} ${guide.category} ${guide.description}`.toLowerCase();
-          return hay.includes(query);
+        const filtered = guides.filter((guide) => {
+          const haystack = `${guide.title} ${guide.category} ${guide.description}`.toLowerCase();
+          return haystack.includes(query);
         });
 
+        resultsMeta.textContent = `${filtered.length} entrada${filtered.length === 1 ? '' : 's'}`;
+
         if (!filtered.length) {
-          list.innerHTML = '<article class="card"><p>No hay resultados.</p></article>';
+          list.innerHTML = '<div class="empty-state">No hay coincidencias con ese termino.</div>';
           return;
         }
 
-        list.innerHTML = filtered.map(guide => `
+        list.innerHTML = filtered.map((guide) => `
           <a class="guide-card" href="./guia.html?slug=${encodeURIComponent(guide.slug)}">
+            <span class="chip">${escapeHtml(guide.category || 'Sin categoria')}</span>
             <strong>${escapeHtml(guide.title)}</strong>
-            <span class="muted">${escapeHtml(guide.category || 'Sin categoría')}</span>
-            <p>${escapeHtml(guide.description || '')}</p>
+            <p class="muted">${escapeHtml(guide.description || 'Sin descripcion breve.')}</p>
           </a>
         `).join('');
       }
@@ -62,9 +82,10 @@
       render();
     }
 
-    init().catch(error => {
+    init().catch((error) => {
       console.error(error);
-      document.getElementById('guideList').innerHTML = '<article class="card"><p>Error cargando las guías.</p></article>';
+      document.getElementById('guideList').innerHTML = '<div class="empty-state">No se pudo cargar el archivo.</div>';
+      document.getElementById('resultsMeta').textContent = 'Error';
     });
   </script>
 </body>

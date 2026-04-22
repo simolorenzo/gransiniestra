@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atlas del rol</title>
+  <title>Gran Siniestra | Atlas de campaña</title>
+  <meta
+    name="description"
+    content="Archivo de localizaciones, facciones y rutas de la campaña Gran Siniestra."
+  />
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container inner">
-      <a class="brand" href="./index.html">Atlas del rol</a>
+      <a class="brand" href="./index.html">
+        <span class="brand-mark">GS</span>
+        <span>Gran Siniestra</span>
+      </a>
       <nav class="nav">
-        <a href="./guias.html">Índice de guías</a>
-        <a href="./mapa.html">Mapa interactivo</a>
-        <a href="./utilidades/coordenadas.html">Utilidad coordenadas</a>
+        <a href="./guias.html">Archivo</a>
+        <a href="./mapa.html">Mapa</a>
+        <a href="./utilidades/coordenadas.html">Taller</a>
       </nav>
     </div>
   </header>
@@ -22,59 +29,106 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-panel">
-          <div class="eyebrow">Starter limpio</div>
-          <h1>Un repo simple para guías y mapa en GitHub Pages</h1>
-          <p class="muted">
-            Sin CMS, sin login raro y con una estructura pensada para que la parte más delicada
-            del contenido esté controlada. Las guías se editan en Markdown y el mapa usa un CSV simple.
+          <div class="eyebrow">Atlas de campaña</div>
+          <h1>Un mundo en ruinas, ordenado como un cuaderno de mesa.</h1>
+          <p class="lede muted">
+            Gran Siniestra reúne lugares, alianzas y rumores en un archivo ligero. Todo el
+            contenido se puede ampliar sin depender de paneles externos ni de una herramienta
+            que acabe estorbando en mitad de la partida.
           </p>
           <div class="actions">
-            <a class="button button-primary" href="./guias.html">Ver guías</a>
-            <a class="button" href="./mapa.html">Abrir mapa</a>
+            <a class="button button-primary" href="./guias.html">Entrar al archivo</a>
+            <a class="button" href="./mapa.html">Recorrer el mapa</a>
+          </div>
+          <div class="hero-meta">
+            <span>Guias en Markdown</span>
+            <span>Mapa enlazado por coordenadas</span>
+            <span>Publicacion estatica</span>
           </div>
         </div>
 
         <div class="cards">
           <article class="card">
-            <h3>Para guías</h3>
-            <p class="muted">Cada guía es un archivo Markdown. Fácil de duplicar, revisar y versionar.</p>
+            <div class="section-tag">Lugares</div>
+            <h3>La informacion esta pensada para consultarse rapido.</h3>
+            <p class="muted">
+              Cada entrada mantiene titulo, tono y resumen para que un director pueda encontrar
+              el dato importante sin pelearse con el formato.
+            </p>
           </article>
           <article class="card">
-            <h3>Para el mapa</h3>
-            <p class="muted">Los puntos salen de un CSV sencillo y hay una utilidad para sacar coordenadas haciendo clic.</p>
+            <div class="section-tag">Mapa</div>
+            <h3>Los puntos del mundo y las guias comparten el mismo hilo.</h3>
+            <p class="muted">
+              El mapa no es un adorno: cada marca lleva a su ficha y sirve como puerta de entrada
+              al contenido de mesa.
+            </p>
           </article>
           <article class="card">
-            <h3>Índice claro</h3>
-            <p class="muted">La portada lleva a las guías, el mapa y la utilidad de edición del mapa.</p>
+            <div class="section-tag">Edicion</div>
+            <h3>El mantenimiento sigue siendo directo.</h3>
+            <p class="muted">
+              Se puede ampliar una region, mover un enclave o abrir una faccion nueva tocando solo
+              los archivos que de verdad importan.
+            </p>
           </article>
           <article class="card">
-            <h3>Mantenimiento simple</h3>
-            <p class="muted">Todo vive en un solo repo y se publica en GitHub Pages sin dependencias raras.</p>
+            <div class="section-tag">Uso</div>
+            <h3>No hay friccion innecesaria entre idea y publicacion.</h3>
+            <p class="muted">
+              El proyecto conserva una estructura simple para trabajar rapido, pero con un acabado
+              visual menos generico y mas propio.
+            </p>
           </article>
         </div>
       </div>
     </section>
 
     <section class="page-section">
-      <div class="container grid-3">
-        <article class="card">
-          <h3>1. Editar una guía</h3>
-          <p>Abre un archivo en <code>content/guias/</code> y cambia el texto.</p>
-        </article>
-        <article class="card">
-          <h3>2. Añadirla al índice</h3>
-          <p>Añade una línea nueva en <code>data/guias.csv</code>.</p>
-        </article>
-        <article class="card">
-          <h3>3. Colocarla en el mapa</h3>
-          <p>Añade o edita su fila en <code>data/mapa.csv</code> usando la utilidad de coordenadas.</p>
-        </article>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-tag">Recorrido</div>
+            <h2>Como crece el atlas</h2>
+          </div>
+          <p class="muted">
+            El flujo sigue siendo sobrio: escribir, indexar y colocar en el mundo. Sin paneles
+            accesorios ni capas opacas entre el texto y la publicacion.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-number">1</div>
+            <h3>Escribe la entrada</h3>
+            <p class="muted">
+              Cada guia vive en <code>content/guias/</code>. El contenido se puede trabajar con
+              calma y versionar como cualquier otro documento del proyecto.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card-number">2</div>
+            <h3>Anotala en el archivo</h3>
+            <p class="muted">
+              <code>data/guias.csv</code> define el listado publico y el resumen con el que cada
+              pieza se presenta dentro del atlas.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card-number">3</div>
+            <h3>Ubicala en el territorio</h3>
+            <p class="muted">
+              Si la entrada debe aparecer en el mapa, basta con darle coordenadas en
+              <code>data/mapa.csv</code> usando la utilidad incluida.
+            </p>
+          </article>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">Hecho para GitHub Pages. Sin backend. Sin Netlify. Sin Decap.</div>
+    <div class="container">Gran Siniestra funciona como un atlas estatico: claro, editable y listo para mesa.</div>
   </footer>
 </body>
 </html>

@@ -3,28 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Utilidad de coordenadas</title>
+  <title>Taller de coordenadas | Gran Siniestra</title>
   <link rel="stylesheet" href="../assets/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container inner">
-      <a class="brand" href="../index.html">Atlas del rol</a>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark">GS</span>
+        <span>Gran Siniestra</span>
+      </a>
       <nav class="nav">
         <a href="../mapa.html">Mapa</a>
-        <a href="../guias.html">Guías</a>
+        <a href="../guias.html">Archivo</a>
       </nav>
     </div>
   </header>
 
   <main class="container page-section">
-    <h1>Utilidad para sacar coordenadas</h1>
-    <p class="muted">Haz clic sobre el mapa y te dará la posición X/Y en porcentaje para copiarla al CSV del mapa.</p>
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Taller</div>
+        <h1>Coordenadas para nuevos enclaves</h1>
+      </div>
+      <p class="muted">
+        Haz clic sobre el mapa para obtener la posicion en porcentaje y montar una linea lista
+        para pegar en <code>data/mapa.csv</code>.
+      </p>
+    </div>
 
     <div class="helper-grid">
       <section class="panel">
         <div class="click-map">
-          <img id="mapImage" src="https://i.imgur.com/Mr40FCw.jpeg" alt="Mapa para sacar coordenadas" />
+          <img id="mapImage" src="https://i.imgur.com/Mr40FCw.jpeg" alt="Mapa base para obtener coordenadas" />
           <div id="crosshair" class="crosshair" hidden></div>
         </div>
       </section>
@@ -33,10 +44,10 @@
         <div class="table-row"><strong>X</strong><div id="xValue">-</div></div>
         <div class="table-row"><strong>Y</strong><div id="yValue">-</div></div>
         <div class="table-row">
-          <strong>Línea ejemplo para pegar en data/mapa.csv</strong>
+          <strong>Linea de ejemplo</strong>
           <textarea id="csvExample" rows="5" readonly></textarea>
         </div>
-        <button id="copyButton" type="button">Copiar ejemplo</button>
+        <button id="copyButton" type="button">Copiar linea</button>
       </aside>
     </div>
   </main>
@@ -58,7 +69,7 @@
 
       xValue.textContent = xf;
       yValue.textContent = yf;
-      csvExample.value = `nuevo-lugar,Nuevo lugar,region,${xf},${yf},Breve extracto,nuevo-lugar`;
+      csvExample.value = `nuevo-enclave,Nuevo enclave,region,${xf},${yf},Descripcion breve,nuevo-enclave`;
 
       crosshair.hidden = false;
       crosshair.style.left = `${event.clientX - rect.left}px`;
@@ -68,8 +79,10 @@
     copyButton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(csvExample.value);
-        copyButton.textContent = 'Copiado';
-        setTimeout(() => copyButton.textContent = 'Copiar ejemplo', 1200);
+        copyButton.textContent = 'Copiada';
+        setTimeout(() => {
+          copyButton.textContent = 'Copiar linea';
+        }, 1200);
       } catch (error) {
         console.error(error);
       }
