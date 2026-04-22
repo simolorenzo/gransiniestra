@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mapa interactivo</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container inner">
+      <a class="brand" href="./index.html">Atlas del rol</a>
+      <nav class="nav">
+        <a href="./index.html">Inicio</a>
+        <a href="./guias.html">Guías</a>
+        <a href="./utilidades/coordenadas.html">Coordenadas</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-section">
+    <h1>Mapa interactivo</h1>
+    <p class="muted">Los puntos salen de <code>data/mapa.csv</code>.</p>
+
+    <div class="map-shell">
+      <div class="map-head">
+        <strong>Lugares destacados</strong>
+      </div>
+      <div id="mapWrap" class="map-wrap"></div>
+    </div>
+  </main>
+
+  <script src="./assets/app.js"></script>
+  <script>
+    async function init() {
+      const points = await fetchCsv('./data/mapa.csv');
+      const mapWrap = document.getElementById('mapWrap');
+
+      const img = document.createElement('img');
+      img.src = './assets/mapa-placeholder.svg';
+      img.alt = 'Mapa del mundo';
+      mapWrap.appendChild(img);
+
+      points.forEach(point => {
+        const marker = document.createElement('a');
+        marker.className = 'marker';
+        marker.href = `./guia.html?slug=${encodeURIComponent(point.slug)}`;
+        marker.style.left = `${numberOrZero(point.x)}%`;
+        marker.style.top = `${numberOrZero(point.y)}%`;
+        marker.setAttribute('aria-label', point.name || point.slug);
+
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.innerHTML = `
+          <strong>${escapeHtml(point.name || point.slug)}</strong>
+          <span>${escapeHtml(point.excerpt || '')}</span>
+        `;
+
+        marker.appendChild(tooltip);
+        mapWrap.appendChild(marker);
+      });
+    }
+
+    init().catch(error => {
+      console.error(error);
+      document.getElementById('mapWrap').innerHTML = '<p style="padding:20px">No se pudo cargar el mapa.</p>';
+    });
+  </script>
+</body>
+</html>

@@ -1,19 +1,13 @@
----
-title: "Bosque Negro"
-description: "Una región peligrosa llena de rumores."
-cover: "./uploads/bosque.svg"
----
-
 # Bosque Negro
 
-El bosque se extiende durante leguas.
+Bosque antiguo cubierto por niebla casi permanente.
 
 ## Peligros
 
-- Bestias
-- Ruinas antiguas
-- Niebla permanente
+- Criaturas territoriales
+- Ruinas olvidadas
+- Caminos que parecen moverse
 
-## Notas de ambientación
+## Uso en partidas
 
-Muchos viajeros no regresan.
+Ideal para tramas de exploracion, pactos viejos y desapariciones.

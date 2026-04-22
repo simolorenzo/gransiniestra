@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Utilidad de coordenadas</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container inner">
+      <a class="brand" href="../index.html">Atlas del rol</a>
+      <nav class="nav">
+        <a href="../mapa.html">Mapa</a>
+        <a href="../guias.html">Guías</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-section">
+    <h1>Utilidad para sacar coordenadas</h1>
+    <p class="muted">Haz clic sobre el mapa y te dará la posición X/Y en porcentaje para copiarla al CSV del mapa.</p>
+
+    <div class="helper-grid">
+      <section class="panel">
+        <div class="click-map">
+          <img id="mapImage" src="../assets/mapa-placeholder.svg" alt="Mapa para sacar coordenadas" />
+          <div id="crosshair" class="crosshair" hidden></div>
+        </div>
+      </section>
+
+      <aside class="panel table-like">
+        <div class="table-row"><strong>X</strong><div id="xValue">-</div></div>
+        <div class="table-row"><strong>Y</strong><div id="yValue">-</div></div>
+        <div class="table-row">
+          <strong>Línea ejemplo para pegar en data/mapa.csv</strong>
+          <textarea id="csvExample" rows="5" readonly></textarea>
+        </div>
+        <button id="copyButton" type="button">Copiar ejemplo</button>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const mapImage = document.getElementById('mapImage');
+    const crosshair = document.getElementById('crosshair');
+    const xValue = document.getElementById('xValue');
+    const yValue = document.getElementById('yValue');
+    const csvExample = document.getElementById('csvExample');
+    const copyButton = document.getElementById('copyButton');
+
+    mapImage.addEventListener('click', (event) => {
+      const rect = mapImage.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      const xf = x.toFixed(1);
+      const yf = y.toFixed(1);
+
+      xValue.textContent = xf;
+      yValue.textContent = yf;
+      csvExample.value = `nuevo-lugar,Nuevo lugar,region,${xf},${yf},Breve extracto,nuevo-lugar`;
+
+      crosshair.hidden = false;
+      crosshair.style.left = `${event.clientX - rect.left}px`;
+      crosshair.style.top = `${event.clientY - rect.top}px`;
+    });
+
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(csvExample.value);
+        copyButton.textContent = 'Copiado';
+        setTimeout(() => copyButton.textContent = 'Copiar ejemplo', 1200);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

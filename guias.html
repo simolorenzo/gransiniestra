@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Índice de guías</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container inner">
+      <a class="brand" href="./index.html">Atlas del rol</a>
+      <nav class="nav">
+        <a href="./index.html">Inicio</a>
+        <a href="./mapa.html">Mapa</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-section">
+    <h1>Índice de guías</h1>
+    <p class="muted">Este listado sale de <code>data/guias.csv</code>.</p>
+
+    <div class="toolbar">
+      <div class="field">
+        <input id="searchInput" class="input" type="search" placeholder="Buscar por título o categoría" />
+      </div>
+    </div>
+
+    <section id="guideList" class="list-grid"></section>
+  </main>
+
+  <script src="./assets/app.js"></script>
+  <script>
+    async function init() {
+      const guides = await fetchCsv('./data/guias.csv');
+      const list = document.getElementById('guideList');
+      const searchInput = document.getElementById('searchInput');
+
+      function render() {
+        const query = searchInput.value.trim().toLowerCase();
+        const filtered = guides.filter(guide => {
+          const hay = `${guide.title} ${guide.category} ${guide.description}`.toLowerCase();
+          return hay.includes(query);
+        });
+
+        if (!filtered.length) {
+          list.innerHTML = '<article class="card"><p>No hay resultados.</p></article>';
+          return;
+        }
+
+        list.innerHTML = filtered.map(guide => `
+          <a class="guide-card" href="./guia.html?slug=${encodeURIComponent(guide.slug)}">
+            <strong>${escapeHtml(guide.title)}</strong>
+            <span class="muted">${escapeHtml(guide.category || 'Sin categoría')}</span>
+            <p>${escapeHtml(guide.description || '')}</p>
+          </a>
+        `).join('');
+      }
+
+      searchInput.addEventListener('input', render);
+      render();
+    }
+
+    init().catch(error => {
+      console.error(error);
+      document.getElementById('guideList').innerHTML = '<article class="card"><p>Error cargando las guías.</p></article>';
+    });
+  </script>
+</body>
+</html>
