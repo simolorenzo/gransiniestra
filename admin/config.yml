@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: simolorenzo/gransiniestra
+  name: git-gateway
   branch: main
 
 site_url: https://simolorenzo.github.io/gransiniestra
