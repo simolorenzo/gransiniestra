@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum | Dolor Sit</title>
+  <title>Mapa | Gran Siniestra</title>
   <link rel="stylesheet" href="./assets/styles/main.css" />
 </head>
 <body>
@@ -11,12 +11,12 @@
     <div class="container inner">
       <a class="brand" href="./index.html">
         <span class="brand-mark">GS</span>
-        <span>Lorem Ipsum</span>
+        <span>Gran Siniestra</span>
       </a>
       <nav class="nav">
-        <a href="./index.html">Lorem</a>
-        <a href="./guias.html">Ipsum</a>
-        <a href="./utilidades/coordenadas.html">Dolor</a>
+        <a href="./index.html">Inicio</a>
+        <a href="./guias.html">Guías</a>
+        <a href="./utilidades/coordenadas.html">Coordenadas</a>
       </nav>
     </div>
   </header>
@@ -24,20 +24,19 @@
   <main class="container page-section">
     <div class="section-head">
       <div>
-        <div class="section-tag">Lorem ipsum</div>
-        <h1>Lorem ipsum dolor sit amet</h1>
+        <div class="section-tag">Mapa</div>
+        <h1>Mapa interactivo</h1>
       </div>
       <p class="muted">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit in <code>data/mapa.csv</code>.
+        Navega por los marcadores del mapa y entra a las guías asociadas.
       </p>
     </div>
 
     <div class="map-shell">
       <div class="map-head">
-        <strong>Lorem ipsum dolor</strong>
+        <strong>Localizaciones</strong>
         <div class="legend">
-          <span>Lorem ipsum dolor</span>
-          <span>Sit amet consectetur</span>
+          <span>Marcadores de guía</span>
         </div>
       </div>
       <div id="mapWrap" class="map-wrap"></div>
@@ -52,7 +51,7 @@
 
       const img = document.createElement('img');
       img.src = 'https://i.imgur.com/Mr40FCw.jpeg';
-      img.alt = 'Lorem ipsum dolor sit amet';
+      img.alt = 'Mapa de Gran Siniestra';
       mapWrap.appendChild(img);
 
       points.forEach((point) => {
@@ -77,7 +76,7 @@
 
     init().catch((error) => {
       console.error(error);
-      document.getElementById('mapWrap').innerHTML = '<p style="padding:20px">Lorem ipsum dolor sit amet.</p>';
+      document.getElementById('mapWrap').innerHTML = '<p style="padding:20px">No se pudo cargar el mapa.</p>';
     });
   </script>
 </body>

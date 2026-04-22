@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum | Dolor Sit</title>
+  <title>Guía | Gran Siniestra</title>
   <link rel="stylesheet" href="./assets/styles/main.css" />
 </head>
 <body>
@@ -13,9 +13,9 @@
         <div class="guide-sidebar-top">
           <a class="guide-brand" href="./index.html">
             <span class="guide-brand-mark">GS</span>
-            <span>Lorem Ipsum</span>
+            <span>Gran Siniestra</span>
           </a>
-          <a class="guide-mini-link" href="./guias.html">Lorem dolor</a>
+          <a class="guide-mini-link" href="./guias.html">Todas las guías</a>
         </div>
         <div id="guideSidebarNav" class="guide-sidebar-nav"></div>
       </div>
@@ -23,10 +23,10 @@
 
     <section class="guide-stage">
       <header class="guide-stage-head">
-        <a class="guide-back-link" href="./guias.html">Lorem ipsum</a>
+        <a class="guide-back-link" href="./guias.html">Volver a guías</a>
         <nav class="guide-stage-links">
-          <a href="./mapa.html">Ipsum</a>
-          <a href="./index.html">Dolor</a>
+          <a href="./mapa.html">Mapa</a>
+          <a href="./index.html">Inicio</a>
         </nav>
       </header>
 
@@ -85,14 +85,14 @@
       return `
         <article class="guide-paper">
           <header class="guide-paper-head">
-            <div class="guide-kicker">${escapeHtml(guide?.category || 'Lorem')}</div>
-            <h1>${escapeHtml(guide?.title || 'Lorem ipsum')}</h1>
+            <div class="guide-kicker">${escapeHtml(guide?.category || 'Guía')}</div>
+            <h1>${escapeHtml(guide?.title || 'Guía')}</h1>
             ${guide?.description ? `<p>${escapeHtml(guide.description)}</p>` : ''}
           </header>
           <div class="guide-section-tabs">
             ${sectionLinks.length ? sectionLinks.map((section) => `
               <a href="#${escapeHtml(section.id)}">${escapeHtml(section.label)}</a>
-            `).join('') : '<span>Lorem ipsum</span>'}
+            `).join('') : '<span>Contenido</span>'}
           </div>
           <div class="guide-paper-divider"></div>
           <div class="guide-body markdown-body">${wrapper.innerHTML}</div>
@@ -110,9 +110,9 @@
         article.innerHTML = `
           <article class="guide-paper">
             <header class="guide-paper-head">
-              <div class="guide-kicker">Lorem ipsum</div>
-              <h1>Lorem ipsum dolor sit</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <div class="guide-kicker">Guía</div>
+              <h1>Falta la guía</h1>
+              <p>Abre una entrada desde el índice de guías.</p>
             </header>
           </article>
         `;
@@ -120,14 +120,14 @@
       }
 
       const guides = await fetchCsv('./data/guias.csv');
-      const groupedGuides = groupBy(guides, (item) => item.category || 'Lorem');
+      const groupedGuides = groupBy(guides, (item) => item.category || 'Sin categoría');
       sidebarNav.innerHTML = buildSidebar(groupedGuides, slug);
 
       const guide = guides.find((item) => item.slug === slug);
       const markdown = await fetchText(`./content/guias/${slug}.md`);
 
       article.innerHTML = buildGuideMarkup(guide, markdown);
-      document.title = `${guide?.title || slugToTitle(slug)} | Lorem Ipsum`;
+      document.title = `${guide?.title || slugToTitle(slug)} | Gran Siniestra`;
       guideApp.classList.remove('loading');
     }
 
@@ -136,9 +136,9 @@
       document.getElementById('article').innerHTML = `
         <article class="guide-paper">
           <header class="guide-paper-head">
-            <div class="guide-kicker">Lorem ipsum</div>
-            <h1>Lorem ipsum dolor sit</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="guide-kicker">Error</div>
+            <h1>No se pudo abrir la guía</h1>
+            <p>Revisa que el archivo exista y que el slug esté bien definido.</p>
           </header>
         </article>
       `;

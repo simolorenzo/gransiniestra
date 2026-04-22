@@ -2,6 +2,17 @@
   padding: 56px 0 34px;
 }
 
+.hero-hub {
+  min-height: calc(100vh - 90px);
+  display: grid;
+  place-items: center;
+}
+
+.hero-hub-inner {
+  display: flex;
+  justify-content: center;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);

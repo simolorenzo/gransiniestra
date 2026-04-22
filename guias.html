@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum | Dolor Sit</title>
+  <title>Guías | Gran Siniestra</title>
   <link rel="stylesheet" href="./assets/styles/main.css" />
 </head>
 <body>
@@ -13,9 +13,9 @@
         <div class="guide-sidebar-top">
           <a class="guide-brand" href="./index.html">
             <span class="guide-brand-mark">GS</span>
-            <span>Lorem Ipsum</span>
+            <span>Gran Siniestra</span>
           </a>
-          <a class="guide-mini-link" href="./mapa.html">Dolor sit</a>
+          <a class="guide-mini-link" href="./mapa.html">Ver mapa</a>
         </div>
         <div id="guideIndexNav" class="guide-sidebar-nav"></div>
       </div>
@@ -23,21 +23,20 @@
 
     <section class="guide-stage">
       <header class="guide-stage-head">
-        <a class="guide-back-link" href="./index.html">Lorem ipsum</a>
+        <a class="guide-back-link" href="./index.html">Volver al hub</a>
         <nav class="guide-stage-links">
-          <a href="./mapa.html">Ipsum</a>
-          <a href="./index.html">Dolor</a>
+          <a href="./mapa.html">Mapa</a>
+          <a href="./index.html">Inicio</a>
         </nav>
       </header>
 
       <div class="guide-stage-body">
         <section class="guide-paper guide-index-paper">
           <header class="guide-paper-head">
-            <div class="guide-kicker">Lorem ipsum</div>
-            <h1>Lorem ipsum dolor sit amet</h1>
+            <div class="guide-kicker">Archivo</div>
+            <h1>Guías</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              Índice principal del manual. Usa el buscador o entra por categoría desde el menú lateral.
             </p>
           </header>
 
@@ -47,10 +46,10 @@
                 id="searchInput"
                 class="input"
                 type="search"
-                placeholder="Lorem ipsum dolor sit"
+                placeholder="Buscar guía"
               />
             </div>
-            <div id="resultsMeta" class="guide-results-meta">Lorem ipsum</div>
+            <div id="resultsMeta" class="guide-results-meta">Cargando guías</div>
           </div>
 
           <section id="guideList" class="guide-index-list"></section>
@@ -82,7 +81,7 @@
       const searchInput = document.getElementById('searchInput');
       const resultsMeta = document.getElementById('resultsMeta');
       const guideIndexNav = document.getElementById('guideIndexNav');
-      const groupedGuides = groupBy(guides, (item) => item.category || 'Lorem');
+      const groupedGuides = groupBy(guides, (item) => item.category || 'Sin categoría');
 
       guideIndexNav.innerHTML = buildIndexSidebar(groupedGuides);
 
@@ -93,18 +92,18 @@
           return haystack.includes(query);
         });
 
-        resultsMeta.textContent = `${filtered.length} lorem`;
+        resultsMeta.textContent = `${filtered.length} guías`;
 
         if (!filtered.length) {
-          list.innerHTML = '<div class="empty-state">Lorem ipsum dolor sit amet.</div>';
+          list.innerHTML = '<div class="empty-state">No se encontraron guías.</div>';
           return;
         }
 
         list.innerHTML = filtered.map((guide) => `
           <a class="guide-index-row" href="./guia.html?slug=${encodeURIComponent(guide.slug)}">
-            <span>${escapeHtml(guide.category || 'Lorem')}</span>
+            <span>${escapeHtml(guide.category || 'Sin categoría')}</span>
             <strong>${escapeHtml(guide.title)}</strong>
-            <p>${escapeHtml(guide.description || 'Lorem ipsum dolor sit amet.')}</p>
+            <p>${escapeHtml(guide.description || 'Sin descripción.')}</p>
           </a>
         `).join('');
       }
@@ -115,8 +114,8 @@
 
     init().catch((error) => {
       console.error(error);
-      document.getElementById('guideList').innerHTML = '<div class="empty-state">Lorem ipsum dolor sit amet.</div>';
-      document.getElementById('resultsMeta').textContent = 'Dolor';
+      document.getElementById('guideList').innerHTML = '<div class="empty-state">No se pudieron cargar las guías.</div>';
+      document.getElementById('resultsMeta').textContent = 'Error';
     });
   </script>
 </body>

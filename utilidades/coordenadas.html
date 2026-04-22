@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lorem Ipsum | Dolor Sit</title>
+  <title>Coordenadas | Gran Siniestra</title>
   <link rel="stylesheet" href="../assets/styles/main.css" />
 </head>
 <body>
@@ -11,11 +11,12 @@
     <div class="container inner">
       <a class="brand" href="../index.html">
         <span class="brand-mark">GS</span>
-        <span>Lorem Ipsum</span>
+        <span>Gran Siniestra</span>
       </a>
       <nav class="nav">
-        <a href="../mapa.html">Lorem</a>
-        <a href="../guias.html">Ipsum</a>
+        <a href="../index.html">Inicio</a>
+        <a href="../guias.html">Guías</a>
+        <a href="../mapa.html">Mapa</a>
       </nav>
     </div>
   </header>
@@ -23,18 +24,18 @@
   <main class="container page-section">
     <div class="section-head">
       <div>
-        <div class="section-tag">Lorem ipsum</div>
-        <h1>Lorem ipsum dolor sit amet</h1>
+        <div class="section-tag">Utilidad</div>
+        <h1>Coordenadas</h1>
       </div>
       <p class="muted">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit in <code>data/mapa.csv</code>.
+        Haz clic sobre el mapa para copiar la posición X e Y de un marcador.
       </p>
     </div>
 
     <div class="helper-grid">
       <section class="panel">
         <div class="click-map">
-          <img id="mapImage" src="https://i.imgur.com/Mr40FCw.jpeg" alt="Lorem ipsum dolor sit amet" />
+          <img id="mapImage" src="https://i.imgur.com/Mr40FCw.jpeg" alt="Mapa para calcular coordenadas" />
           <div id="crosshair" class="crosshair" hidden></div>
         </div>
       </section>
@@ -43,10 +44,10 @@
         <div class="table-row"><strong>X</strong><div id="xValue">-</div></div>
         <div class="table-row"><strong>Y</strong><div id="yValue">-</div></div>
         <div class="table-row">
-          <strong>Lorem ipsum</strong>
+          <strong>Línea CSV</strong>
           <textarea id="csvExample" rows="5" readonly></textarea>
         </div>
-        <button id="copyButton" type="button">Lorem ipsum</button>
+        <button id="copyButton" type="button">Copiar línea</button>
       </aside>
     </div>
   </main>
@@ -68,7 +69,7 @@
 
       xValue.textContent = xf;
       yValue.textContent = yf;
-      csvExample.value = `lorem-ipsum,Lorem ipsum,dolor,${xf},${yf},Lorem ipsum dolor,lorem-ipsum`;
+      csvExample.value = `nuevo-slug,Nuevo título,categoria,${xf},${yf},Descripcion breve,nuevo-slug`;
 
       crosshair.hidden = false;
       crosshair.style.left = `${event.clientX - rect.left}px`;
@@ -78,9 +79,9 @@
     copyButton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(csvExample.value);
-        copyButton.textContent = 'Dolor';
+        copyButton.textContent = 'Copiado';
         setTimeout(() => {
-          copyButton.textContent = 'Lorem ipsum';
+          copyButton.textContent = 'Copiar línea';
         }, 1200);
       } catch (error) {
         console.error(error);

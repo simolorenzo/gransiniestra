@@ -1,4 +1,22 @@
 slug,title,category,description
-capital-del-reino,Lorem Ipsum,Lorem,Lorem ipsum dolor sit amet consectetur adipiscing elit.
-bosque-negro,Dolor Sit,Ipsum,Lorem ipsum dolor sit amet consectetur adipiscing elit.
-casa-del-gremio,Amet Elit,Dolor,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+ambientacion,Ambientación,Esencial,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+magia,Magia,Esencial,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+facciones,Facciones,Esencial,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+razas,Razas,Esencial,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+atributos,Atributos,Esencial,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+niveles,Niveles,Esencial,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+guia-de-combate,Guía de Combate,Combate,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+danos-y-cansancio,Daños y cansancio,Combate,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+tecnicas-y-hechizos,Técnicas y hechizos,Combate,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+anima,Ánima,Combate,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+conquistas,Conquistas,Combate,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+secretos,Secretos,Extra,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+links-de-interes,Links de interés,Extra,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+oficios,Oficios,Extra,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+misiones,Misiones,Extra,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+casas-y-organizaciones,Casas & Organizaciones,Extra,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+se-busca,Se busca,Extra,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+guia-de-rol,Guia de Rol,Anexo,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+narradores,Narradores,Anexo,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+cuentas,Cuentas,Anexo,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+exp,Exp,Anexo,Lorem ipsum dolor sit amet consectetur adipiscing elit.
