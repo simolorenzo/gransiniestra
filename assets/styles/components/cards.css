@@ -1,0 +1,56 @@
+.hero-panel,
+.card,
+.panel,
+.article,
+.map-shell,
+.guide-card,
+.detail-panel {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--panel), var(--panel-strong));
+  box-shadow: var(--shadow);
+}
+
+.card {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+}
+
+.card-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--accent-strong);
+}
+
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 220px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+
+  & strong {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 600;
+  }
+
+  & p {
+    margin: 0;
+  }
+}
+
+.empty-state {
+  padding: 24px;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  color: var(--muted);
+}

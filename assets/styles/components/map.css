@@ -1,0 +1,113 @@
+.map-shell {
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.map-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.map-wrap,
+.click-map {
+  position: relative;
+  overflow: hidden;
+  background: #090807;
+
+  & img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.3));
+  }
+}
+
+.marker {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #20160f;
+  border-radius: 50%;
+  transform: translate(-50%, -100%);
+  background: radial-gradient(circle at 35% 35%, #ff7d7d, #8f1f1f 72%);
+  box-shadow: 0 0 0 7px rgba(218, 68, 68, 0.16);
+  text-decoration: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+
+  & .tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    min-width: 200px;
+    max-width: 260px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transform: translateX(-50%);
+    background: rgba(18, 14, 11, 0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s ease;
+
+    & strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    & span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+  }
+
+  &:hover .tooltip,
+  &:focus-visible .tooltip {
+    opacity: 1;
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.92rem;
+
+    &::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #da4444;
+      box-shadow: 0 0 0 4px rgba(218, 68, 68, 0.14);
+    }
+  }
+}
+
+.crosshair {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #fff5e6;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0);
+}

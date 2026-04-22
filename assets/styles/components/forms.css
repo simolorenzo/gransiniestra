@@ -1,0 +1,71 @@
+.toolbar,
+.guide-toolbar,
+.actions,
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toolbar {
+  align-items: stretch;
+  margin: 0 0 22px;
+
+  & .field {
+    flex: 1 1 260px;
+  }
+}
+
+.guide-toolbar {
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.toolbar-note {
+  align-self: center;
+}
+
+.input,
+select,
+textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(27, 21, 17, 0.92);
+  color: var(--text);
+}
+
+.input::placeholder,
+textarea::placeholder {
+  color: #a8947e;
+}
+
+.hero-meta {
+  margin-top: 22px;
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.93rem;
+}

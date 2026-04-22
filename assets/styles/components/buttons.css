@@ -1,0 +1,39 @@
+.nav a,
+.button,
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(52, 40, 31, 0.5);
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.nav a:hover,
+.button:hover,
+button:hover,
+.nav a:focus-visible,
+.button:focus-visible,
+button:focus-visible,
+.guide-card:hover,
+.guide-card:focus-visible,
+.marker:hover,
+.marker:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(218, 68, 68, 0.62);
+  background: rgba(58, 18, 18, 0.72);
+  outline: none;
+}
+
+.button-primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, #da4444 0%, #8f1f1f 100%);
+  color: #fff4f4;
+  font-weight: 700;
+}

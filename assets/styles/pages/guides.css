@@ -1,0 +1,41 @@
+.list-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.split-layout {
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  align-items: start;
+}
+
+.detail-panel {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+
+  & dl {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+
+  & dt {
+    margin-bottom: 5px;
+    color: var(--accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+  }
+
+  & dd {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  margin: 28px 0 18px;
+  color: var(--accent-strong);
+  text-decoration: none;
+}

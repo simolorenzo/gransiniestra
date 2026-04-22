@@ -1,0 +1,25 @@
+.helper-grid {
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+}
+
+.panel {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+}
+
+.table-like {
+  display: grid;
+  gap: 12px;
+}
+
+.table-row {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(22, 17, 13, 0.92);
+
+  & strong {
+    display: block;
+    margin-bottom: 8px;
+  }
+}
