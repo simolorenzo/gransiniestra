@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mapa | Gran Siniestra</title>
+  <title>Lorem Ipsum | Dolor Sit</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
@@ -11,12 +11,12 @@
     <div class="container inner">
       <a class="brand" href="./index.html">
         <span class="brand-mark">GS</span>
-        <span>Gran Siniestra</span>
+        <span>Lorem Ipsum</span>
       </a>
       <nav class="nav">
-        <a href="./index.html">Portada</a>
-        <a href="./guias.html">Archivo</a>
-        <a href="./utilidades/coordenadas.html">Taller</a>
+        <a href="./index.html">Lorem</a>
+        <a href="./guias.html">Ipsum</a>
+        <a href="./utilidades/coordenadas.html">Dolor</a>
       </nav>
     </div>
   </header>
@@ -24,20 +24,20 @@
   <main class="container page-section">
     <div class="section-head">
       <div>
-        <div class="section-tag">Territorio</div>
-        <h1>Mapa de localizaciones</h1>
+        <div class="section-tag">Lorem ipsum</div>
+        <h1>Lorem ipsum dolor sit amet</h1>
       </div>
       <p class="muted">
-        Cada marcador enlaza con su entrada y toma sus coordenadas desde <code>data/mapa.csv</code>.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit in <code>data/mapa.csv</code>.
       </p>
     </div>
 
     <div class="map-shell">
       <div class="map-head">
-        <strong>Enclaves activos</strong>
+        <strong>Lorem ipsum dolor</strong>
         <div class="legend">
-          <span>Ciudad o distrito clave</span>
-          <span>Region, faccion o zona de paso</span>
+          <span>Lorem ipsum dolor</span>
+          <span>Sit amet consectetur</span>
         </div>
       </div>
       <div id="mapWrap" class="map-wrap"></div>
@@ -52,7 +52,7 @@
 
       const img = document.createElement('img');
       img.src = 'https://i.imgur.com/Mr40FCw.jpeg';
-      img.alt = 'Mapa del mundo de Gran Siniestra';
+      img.alt = 'Lorem ipsum dolor sit amet';
       mapWrap.appendChild(img);
 
       points.forEach((point) => {
@@ -77,7 +77,7 @@
 
     init().catch((error) => {
       console.error(error);
-      document.getElementById('mapWrap').innerHTML = '<p style="padding:20px">No se pudo cargar el mapa.</p>';
+      document.getElementById('mapWrap').innerHTML = '<p style="padding:20px">Lorem ipsum dolor sit amet.</p>';
     });
   </script>
 </body>

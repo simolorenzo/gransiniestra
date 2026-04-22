@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=UnifrakturCook:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #120f0d;
-  --bg-soft: #1a1511;
-  --panel: rgba(34, 26, 21, 0.9);
-  --panel-strong: rgba(26, 20, 16, 0.96);
-  --panel-light: rgba(58, 45, 36, 0.44);
-  --text: #efe3d2;
-  --muted: #c4b29c;
-  --accent: #d6a96e;
-  --accent-strong: #f0c48a;
-  --border: rgba(214, 169, 110, 0.22);
+  --bg: #050505;
+  --bg-soft: #0b0b0b;
+  --panel: rgba(14, 14, 14, 0.92);
+  --panel-strong: rgba(7, 7, 7, 0.98);
+  --panel-light: rgba(72, 14, 14, 0.32);
+  --text: #eadede;
+  --muted: #aa9191;
+  --accent: #8f1f1f;
+  --accent-strong: #da4444;
+  --border: rgba(218, 68, 68, 0.24);
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   --radius-xl: 28px;
   --radius-lg: 20px;
@@ -31,9 +31,9 @@ body {
   color: var(--text);
   font-family: "IBM Plex Sans", system-ui, sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(214, 169, 110, 0.09), transparent 34%),
-    radial-gradient(circle at 85% 18%, rgba(255, 219, 174, 0.08), transparent 24%),
-    linear-gradient(180deg, #0d0b09 0%, #14100d 45%, #110e0b 100%);
+    radial-gradient(circle at top left, rgba(218, 68, 68, 0.14), transparent 32%),
+    radial-gradient(circle at 85% 18%, rgba(120, 12, 12, 0.12), transparent 24%),
+    linear-gradient(180deg, #020202 0%, #070707 45%, #050505 100%);
   min-height: 100vh;
 }
 
@@ -83,8 +83,8 @@ input {
 .guide-sidebar {
   position: relative;
   background:
-    linear-gradient(180deg, rgba(6, 6, 6, 0.98), rgba(10, 10, 10, 0.98)),
-    #040404;
+    linear-gradient(180deg, rgba(2, 2, 2, 0.99), rgba(8, 8, 8, 0.99)),
+    #020202;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -94,7 +94,7 @@ input {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(189, 30, 30, 0.06), transparent 16%),
+    linear-gradient(180deg, rgba(218, 68, 68, 0.08), transparent 16%),
     linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
   background-size: auto, 36px 36px;
   opacity: 0.45;
@@ -116,10 +116,10 @@ input {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #f1e6d7;
+  color: #f1e4e4;
   text-decoration: none;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 2rem;
+  font-size: 1.62rem;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -129,17 +129,17 @@ input {
   height: 36px;
   display: inline-grid;
   place-items: center;
-  border: 1px solid rgba(176, 37, 37, 0.45);
+  border: 1px solid rgba(218, 68, 68, 0.45);
   border-radius: 50%;
-  color: #c94d42;
+  color: #da4444;
   font-size: 0.86rem;
-  box-shadow: inset 0 0 24px rgba(184, 41, 41, 0.12);
+  box-shadow: inset 0 0 24px rgba(218, 68, 68, 0.12);
 }
 
 .guide-mini-link {
   display: inline-flex;
   margin-top: 16px;
-  color: #b8a895;
+  color: #ab9494;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -155,11 +155,11 @@ input {
 
 .guide-nav-group h2 {
   margin: 0 0 14px;
-  color: #d14d44;
-  font-family: "UnifrakturCook", "Cormorant Garamond", serif;
-  font-size: 2rem;
-  line-height: 0.9;
-  letter-spacing: 0.03em;
+  color: #da4444;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
 }
 
 .guide-nav-group ul {
@@ -175,7 +175,7 @@ input {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: #b9b0a4;
+  color: #baa7a7;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.72rem;
@@ -190,14 +190,14 @@ input {
 .guide-nav-group a.is-active,
 .guide-nav-group a:hover,
 .guide-nav-group a:focus-visible {
-  color: #f0e2cd;
+  color: #fff0f0;
   outline: none;
 }
 
 .guide-nav-group a.is-active::before,
 .guide-nav-group a:hover::before,
 .guide-nav-group a:focus-visible::before {
-  color: #c94d42;
+  color: #da4444;
 }
 
 .guide-stage {
@@ -215,7 +215,7 @@ input {
 
 .guide-back-link,
 .guide-stage-links a {
-  color: #ad9f8f;
+  color: #aa9494;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -234,7 +234,7 @@ input {
 
 .guide-paper {
   min-height: calc(100vh - 120px);
-  background: rgba(4, 4, 4, 0.84);
+  background: rgba(3, 3, 3, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 0;
   box-shadow: none;
@@ -251,7 +251,7 @@ input {
 
 .guide-kicker {
   margin-bottom: 14px;
-  color: #d14d44;
+  color: #da4444;
   text-transform: uppercase;
   letter-spacing: 0.22em;
   font-size: 0.74rem;
@@ -259,14 +259,14 @@ input {
 
 .guide-paper h1 {
   margin-bottom: 12px;
-  font-size: clamp(2.8rem, 5vw, 5rem);
-  line-height: 0.92;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.02;
 }
 
 .guide-paper-head p {
   max-width: 68ch;
   margin: 0;
-  color: #b9b0a4;
+  color: #b19a9a;
 }
 
 .guide-section-tabs {
@@ -278,7 +278,7 @@ input {
 
 .guide-section-tabs a,
 .guide-section-tabs span {
-  color: #c3b6a6;
+  color: #c1aeae;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -287,14 +287,14 @@ input {
 
 .guide-section-tabs a:hover,
 .guide-section-tabs a:focus-visible {
-  color: #f0e2cd;
+  color: #fff0f0;
   outline: none;
 }
 
 .guide-paper-divider {
   height: 1px;
   margin-bottom: 34px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(90deg, rgba(218, 68, 68, 0.42), rgba(255, 255, 255, 0.02));
 }
 
 .guide-body {
@@ -303,18 +303,19 @@ input {
 
 .guide-body h2 {
   margin-top: 2.6rem;
-  color: #e7d3bb;
-  font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+  color: #eedcdc;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
   scroll-margin-top: 24px;
 }
 
 .guide-body h3 {
-  color: #dbc5ac;
+  color: #dfc9c9;
+  font-size: clamp(1.08rem, 1.8vw, 1.32rem);
 }
 
 .guide-body p,
 .guide-body li {
-  color: #beb3a7;
+  color: #b9a8a8;
 }
 
 .guide-body ul {
@@ -330,7 +331,7 @@ input {
 }
 
 .guide-results-meta {
-  color: #a79a8b;
+  color: #a69292;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 0.72rem;
@@ -362,21 +363,21 @@ input {
 }
 
 .guide-index-row span {
-  color: #d14d44;
+  color: #da4444;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.7rem;
 }
 
 .guide-index-row strong {
-  color: #efe2d0;
+  color: #f3e6e6;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.7rem;
+  font-size: 1.34rem;
   font-weight: 600;
 }
 
 .guide-index-row p {
-  color: #aa9f92;
+  color: #a99696;
   line-height: 1.75;
 }
 
@@ -390,7 +391,7 @@ input {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(13, 11, 9, 0.8);
+  background: rgba(4, 4, 4, 0.86);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -421,7 +422,7 @@ input {
   border-radius: 50%;
   display: inline-grid;
   place-items: center;
-  background: radial-gradient(circle at 30% 30%, rgba(240, 196, 138, 0.28), rgba(214, 169, 110, 0.06));
+  background: radial-gradient(circle at 30% 30%, rgba(218, 68, 68, 0.32), rgba(143, 31, 31, 0.08));
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   font-size: 0.95rem;
 }
@@ -460,14 +461,14 @@ button:focus-visible,
 .marker:hover,
 .marker:focus-visible {
   transform: translateY(-1px);
-  border-color: rgba(240, 196, 138, 0.62);
-  background: rgba(76, 57, 42, 0.72);
+  border-color: rgba(218, 68, 68, 0.62);
+  background: rgba(58, 18, 18, 0.72);
   outline: none;
 }
 
 .button-primary {
-  background: linear-gradient(135deg, #f0c48a 0%, #c89558 100%);
-  color: #20160f;
+  background: linear-gradient(135deg, #da4444 0%, #8f1f1f 100%);
+  color: #fff4f4;
   border-color: transparent;
   font-weight: 700;
 }
@@ -509,7 +510,7 @@ button:focus-visible,
   width: 240px;
   height: 240px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(240, 196, 138, 0.12), transparent 70%);
+  background: radial-gradient(circle, rgba(218, 68, 68, 0.14), transparent 70%);
 }
 
 .eyebrow,
@@ -531,15 +532,15 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(3rem, 8vw, 5.8rem);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
 }
 
 h2 {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
 }
 
 h3 {
-  font-size: 1.55rem;
+  font-size: clamp(1.08rem, 1.8vw, 1.32rem);
 }
 
 p,
@@ -817,8 +818,8 @@ textarea::placeholder {
   height: 18px;
   border-radius: 50%;
   border: 2px solid #20160f;
-  background: radial-gradient(circle at 35% 35%, #ffe0ae, #cd9354 72%);
-  box-shadow: 0 0 0 7px rgba(214, 169, 110, 0.18);
+  background: radial-gradient(circle at 35% 35%, #ff7d7d, #8f1f1f 72%);
+  box-shadow: 0 0 0 7px rgba(218, 68, 68, 0.16);
   text-decoration: none;
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
@@ -874,8 +875,8 @@ textarea::placeholder {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #d6a96e;
-  box-shadow: 0 0 0 4px rgba(214, 169, 110, 0.14);
+  background: #da4444;
+  box-shadow: 0 0 0 4px rgba(218, 68, 68, 0.14);
 }
 
 .helper-grid {
@@ -989,11 +990,11 @@ footer .container {
   }
 
   .guide-brand {
-    font-size: 1.72rem;
+    font-size: 1.48rem;
   }
 
   .guide-nav-group h2 {
-    font-size: 1.7rem;
+    font-size: 1.24rem;
   }
 
   .guide-section-tabs {
