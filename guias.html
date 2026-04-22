@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Archivo | Gran Siniestra</title>
+  <title>Lorem Ipsum | Dolor Sit</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
@@ -13,9 +13,9 @@
         <div class="guide-sidebar-top">
           <a class="guide-brand" href="./index.html">
             <span class="guide-brand-mark">GS</span>
-            <span>Gran Siniestra</span>
+            <span>Lorem Ipsum</span>
           </a>
-          <a class="guide-mini-link" href="./mapa.html">Ir al mapa</a>
+          <a class="guide-mini-link" href="./mapa.html">Dolor sit</a>
         </div>
         <div id="guideIndexNav" class="guide-sidebar-nav"></div>
       </div>
@@ -23,21 +23,21 @@
 
     <section class="guide-stage">
       <header class="guide-stage-head">
-        <a class="guide-back-link" href="./index.html">Volver a portada</a>
+        <a class="guide-back-link" href="./index.html">Lorem ipsum</a>
         <nav class="guide-stage-links">
-          <a href="./mapa.html">Mapa</a>
-          <a href="./index.html">Inicio</a>
+          <a href="./mapa.html">Ipsum</a>
+          <a href="./index.html">Dolor</a>
         </nav>
       </header>
 
       <div class="guide-stage-body">
         <section class="guide-paper guide-index-paper">
           <header class="guide-paper-head">
-            <div class="guide-kicker">Archivo</div>
-            <h1>Guias de la campaña</h1>
+            <div class="guide-kicker">Lorem ipsum</div>
+            <h1>Lorem ipsum dolor sit amet</h1>
             <p>
-              Un indice de consulta rapida con tono de dossier. Filtra por ciudad, faccion,
-              region o cualquier termino recogido en el resumen.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
             </p>
           </header>
 
@@ -47,10 +47,10 @@
                 id="searchInput"
                 class="input"
                 type="search"
-                placeholder="Buscar una ciudad, una faccion o un rumor"
+                placeholder="Lorem ipsum dolor sit"
               />
             </div>
-            <div id="resultsMeta" class="guide-results-meta">Cargando archivo</div>
+            <div id="resultsMeta" class="guide-results-meta">Lorem ipsum</div>
           </div>
 
           <section id="guideList" class="guide-index-list"></section>
@@ -82,7 +82,7 @@
       const searchInput = document.getElementById('searchInput');
       const resultsMeta = document.getElementById('resultsMeta');
       const guideIndexNav = document.getElementById('guideIndexNav');
-      const groupedGuides = groupBy(guides, (item) => item.category || 'Sin categoria');
+      const groupedGuides = groupBy(guides, (item) => item.category || 'Lorem');
 
       guideIndexNav.innerHTML = buildIndexSidebar(groupedGuides);
 
@@ -93,18 +93,18 @@
           return haystack.includes(query);
         });
 
-        resultsMeta.textContent = `${filtered.length} entrada${filtered.length === 1 ? '' : 's'}`;
+        resultsMeta.textContent = `${filtered.length} lorem`;
 
         if (!filtered.length) {
-          list.innerHTML = '<div class="empty-state">No hay coincidencias con ese termino.</div>';
+          list.innerHTML = '<div class="empty-state">Lorem ipsum dolor sit amet.</div>';
           return;
         }
 
         list.innerHTML = filtered.map((guide) => `
           <a class="guide-index-row" href="./guia.html?slug=${encodeURIComponent(guide.slug)}">
-            <span>${escapeHtml(guide.category || 'Sin categoria')}</span>
+            <span>${escapeHtml(guide.category || 'Lorem')}</span>
             <strong>${escapeHtml(guide.title)}</strong>
-            <p>${escapeHtml(guide.description || 'Sin descripcion breve.')}</p>
+            <p>${escapeHtml(guide.description || 'Lorem ipsum dolor sit amet.')}</p>
           </a>
         `).join('');
       }
@@ -115,8 +115,8 @@
 
     init().catch((error) => {
       console.error(error);
-      document.getElementById('guideList').innerHTML = '<div class="empty-state">No se pudo cargar el archivo.</div>';
-      document.getElementById('resultsMeta').textContent = 'Error';
+      document.getElementById('guideList').innerHTML = '<div class="empty-state">Lorem ipsum dolor sit amet.</div>';
+      document.getElementById('resultsMeta').textContent = 'Dolor';
     });
   </script>
 </body>

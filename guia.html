@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Entrada | Gran Siniestra</title>
+  <title>Lorem Ipsum | Dolor Sit</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
@@ -13,9 +13,9 @@
         <div class="guide-sidebar-top">
           <a class="guide-brand" href="./index.html">
             <span class="guide-brand-mark">GS</span>
-            <span>Gran Siniestra</span>
+            <span>Lorem Ipsum</span>
           </a>
-          <a class="guide-mini-link" href="./guias.html">Archivo completo</a>
+          <a class="guide-mini-link" href="./guias.html">Lorem dolor</a>
         </div>
         <div id="guideSidebarNav" class="guide-sidebar-nav"></div>
       </div>
@@ -23,10 +23,10 @@
 
     <section class="guide-stage">
       <header class="guide-stage-head">
-        <a class="guide-back-link" href="./guias.html">Volver al archivo</a>
+        <a class="guide-back-link" href="./guias.html">Lorem ipsum</a>
         <nav class="guide-stage-links">
-          <a href="./mapa.html">Mapa</a>
-          <a href="./index.html">Portada</a>
+          <a href="./mapa.html">Ipsum</a>
+          <a href="./index.html">Dolor</a>
         </nav>
       </header>
 
@@ -82,26 +82,22 @@
         });
       });
 
-      return {
-        sectionLinks,
-        bodyHtml: wrapper.innerHTML,
-        layout: `
-          <article class="guide-paper">
-            <header class="guide-paper-head">
-              <div class="guide-kicker">${escapeHtml(guide?.category || 'Entrada')}</div>
-              <h1>${escapeHtml(guide?.title || 'Entrada')}</h1>
-              ${guide?.description ? `<p>${escapeHtml(guide.description)}</p>` : ''}
-            </header>
-            <div class="guide-section-tabs">
-              ${sectionLinks.length ? sectionLinks.map((section) => `
-                <a href="#${escapeHtml(section.id)}">${escapeHtml(section.label)}</a>
-              `).join('') : '<span>Sin secciones internas</span>'}
-            </div>
-            <div class="guide-paper-divider"></div>
-            <div class="guide-body markdown-body">${wrapper.innerHTML}</div>
-          </article>
-        `
-      };
+      return `
+        <article class="guide-paper">
+          <header class="guide-paper-head">
+            <div class="guide-kicker">${escapeHtml(guide?.category || 'Lorem')}</div>
+            <h1>${escapeHtml(guide?.title || 'Lorem ipsum')}</h1>
+            ${guide?.description ? `<p>${escapeHtml(guide.description)}</p>` : ''}
+          </header>
+          <div class="guide-section-tabs">
+            ${sectionLinks.length ? sectionLinks.map((section) => `
+              <a href="#${escapeHtml(section.id)}">${escapeHtml(section.label)}</a>
+            `).join('') : '<span>Lorem ipsum</span>'}
+          </div>
+          <div class="guide-paper-divider"></div>
+          <div class="guide-body markdown-body">${wrapper.innerHTML}</div>
+        </article>
+      `;
     }
 
     async function init() {
@@ -114,9 +110,9 @@
         article.innerHTML = `
           <article class="guide-paper">
             <header class="guide-paper-head">
-              <div class="guide-kicker">Entrada</div>
-              <h1>Falta la referencia</h1>
-              <p>Abre la guia desde el archivo o desde un marcador del mapa.</p>
+              <div class="guide-kicker">Lorem ipsum</div>
+              <h1>Lorem ipsum dolor sit</h1>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </header>
           </article>
         `;
@@ -124,15 +120,14 @@
       }
 
       const guides = await fetchCsv('./data/guias.csv');
-      const groupedGuides = groupBy(guides, (item) => item.category || 'Sin categoria');
+      const groupedGuides = groupBy(guides, (item) => item.category || 'Lorem');
       sidebarNav.innerHTML = buildSidebar(groupedGuides, slug);
 
       const guide = guides.find((item) => item.slug === slug);
       const markdown = await fetchText(`./content/guias/${slug}.md`);
-      const rendered = buildGuideMarkup(guide, markdown);
 
-      article.innerHTML = rendered.layout;
-      document.title = `${guide?.title || slugToTitle(slug)} | Gran Siniestra`;
+      article.innerHTML = buildGuideMarkup(guide, markdown);
+      document.title = `${guide?.title || slugToTitle(slug)} | Lorem Ipsum`;
       guideApp.classList.remove('loading');
     }
 
@@ -141,9 +136,9 @@
       document.getElementById('article').innerHTML = `
         <article class="guide-paper">
           <header class="guide-paper-head">
-            <div class="guide-kicker">Error</div>
-            <h1>No se pudo abrir esta entrada</h1>
-            <p>Revisa que el slug exista en el CSV y que el archivo Markdown este disponible.</p>
+            <div class="guide-kicker">Lorem ipsum</div>
+            <h1>Lorem ipsum dolor sit</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </header>
         </article>
       `;

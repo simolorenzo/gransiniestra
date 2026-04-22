@@ -1,17 +1,19 @@
-# Casa del Gremio
+# Amet Elit
 
-La Casa del Gremio es menos una fortaleza que un terreno neutral armado con archivos, custodias y protocolo. Alli se firman contratos, se liquidan recompensas y se congelan disputas que nadie quiere llevar a guerra abierta.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-## Quien manda
+## Lorem ipsum
 
-La gobierna una mesa de representantes con derecho a veto. Su aparente lentitud es parte del sistema: cuanto mas tarda una decision, mas favores se negocian alrededor de ella.
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- Sed do eiusmod tempor incididunt ut labore et dolore.
+- Ut enim ad minim veniam, quis nostrud exercitation.
 
-## Que puede encontrarse aqui
+## Dolor sit
 
-- Mercenarios entre encargos con demasiado tiempo para escuchar conversaciones ajenas.
-- Escribas que conocen el valor real de cada sello y cada firma.
-- Mediadores acostumbrados a traducir amenazas en clausulas aceptables.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-## Uso en partida
+## Amet elit
 
-Es un lugar excelente para arrancar encargos, cerrar consecuencias o tensar relaciones entre facciones que todavia necesitan fingir civismo.
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- Sed do eiusmod tempor incididunt ut labore et dolore.
+- Ut enim ad minim veniam, quis nostrud exercitation.
