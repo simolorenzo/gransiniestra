@@ -20,7 +20,7 @@ function createMapToolbar() {
   toolbar.innerHTML = `
     <div class="map-toolbar-copy">
       <span class="section-tag">Visor</span>
-      <p class="muted">Rueda para acercar, arrastra para moverte.</p>
+      <p class="muted">Rueda o botón derecho para zoom. Arrastra con botón izquierdo para moverte.</p>
     </div>
     <div class="map-toolbar-actions">
       <button type="button" class="map-zoom-button" data-action="zoom-out" aria-label="Alejar">-</button>
@@ -107,8 +107,10 @@ function setupZoom(mapContainer, viewport, stage) {
     maxZoom: 3.5,
     x: 0,
     y: 0,
+    mode: null,
     startX: 0,
     startY: 0,
+    startZoom: 1,
     dragging: false
   };
 
@@ -205,15 +207,30 @@ function setupZoom(mapContainer, viewport, stage) {
       return;
     }
 
+    if (event.button === 2) {
+      state.mode = "zoom";
+      state.startY = event.clientY;
+      state.startZoom = state.zoom;
+      viewport.classList.add("is-zooming");
+    } else {
+      state.mode = "pan";
+      state.startX = event.clientX - state.x;
+      state.startY = event.clientY - state.y;
+      viewport.classList.add("is-dragging");
+    }
+
     state.dragging = true;
-    state.startX = event.clientX - state.x;
-    state.startY = event.clientY - state.y;
-    viewport.classList.add("is-dragging");
     viewport.setPointerCapture(event.pointerId);
   });
 
   viewport.addEventListener("pointermove", (event) => {
     if (!state.dragging) {
+      return;
+    }
+
+    if (state.mode === "zoom") {
+      const deltaY = state.startY - event.clientY;
+      zoomTo(state.startZoom + deltaY * 0.005);
       return;
     }
 
@@ -228,11 +245,17 @@ function setupZoom(mapContainer, viewport, stage) {
     }
 
     state.dragging = false;
+    state.mode = null;
     viewport.classList.remove("is-dragging");
+    viewport.classList.remove("is-zooming");
     if (event?.pointerId !== undefined) {
       viewport.releasePointerCapture(event.pointerId);
     }
   };
+
+  viewport.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
 
   viewport.addEventListener("pointerup", stopDragging);
   viewport.addEventListener("pointercancel", stopDragging);

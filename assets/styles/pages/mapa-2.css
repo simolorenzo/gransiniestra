@@ -5,6 +5,11 @@ body {
     linear-gradient(180deg, #090909 0%, #050505 100%);
 }
 
+.topbar .container,
+.map-page .container {
+  width: min(100%, calc(100vw - 32px));
+}
+
 .map-page {
   padding-bottom: 56px;
 }
@@ -24,7 +29,7 @@ body {
 
 .map-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
   gap: 24px;
   align-items: start;
 }
@@ -197,6 +202,10 @@ body {
 
 .map-viewport.is-dragging {
   cursor: grabbing;
+}
+
+.map-viewport.is-zooming {
+  cursor: ns-resize;
 }
 
 .map-stage {
