@@ -473,6 +473,19 @@ function normalizeMarkerRow(row, index) {
   };
 }
 
+function normalizeCollectionRow(row, index) {
+  return {
+    id: row.id || `${row.layer_id || "capa"}-${index + 1}`,
+    layerId: row.layer_id || "recoleccion",
+    category: row.category || "general",
+    name: row.name || `Punto ${index + 1}`,
+    x: Number.parseFloat(String(row.x).replace(",", ".")) || 0,
+    y: Number.parseFloat(String(row.y).replace(",", ".")) || 0,
+    color: row.color || "#da4444",
+    iconHtml: row.icon_html || '<span class="fas fa-circle"></span>'
+  };
+}
+
 async function getMarkerData(mapLayer) {
   const legacyMarkers = readLegacyMarkers(mapLayer);
 
@@ -489,6 +502,16 @@ async function getMarkerData(mapLayer) {
   }
 }
 
+async function getCollectionData() {
+  try {
+    const rows = await loadCsvRows("./data/mapa-recoleccion.csv");
+    return rows.map(normalizeCollectionRow);
+  } catch (error) {
+    console.warn("No se pudo cargar data/mapa-recoleccion.csv.", error);
+    return [];
+  }
+}
+
 function ensureMapLayer(stage) {
   let mapLayer = stage.querySelector(".lugar");
 
@@ -499,6 +522,18 @@ function ensureMapLayer(stage) {
   }
 
   return mapLayer;
+}
+
+function ensureOverlayRoot(stage) {
+  let root = stage.querySelector(".map-overlay-root");
+
+  if (!root) {
+    root = document.createElement("div");
+    root.className = "map-overlay-root";
+    stage.appendChild(root);
+  }
+
+  return root;
 }
 
 function renderMarkers(mapLayer, markers) {
@@ -517,6 +552,107 @@ function renderMarkers(mapLayer, markers) {
       `;
     })
     .join("");
+}
+
+function renderCollectionLayers(overlayRoot, rows) {
+  overlayRoot.innerHTML = "";
+
+  const grouped = rows.reduce((map, row) => {
+    if (!map.has(row.layerId)) {
+      map.set(row.layerId, []);
+    }
+
+    map.get(row.layerId).push(row);
+    return map;
+  }, new Map());
+
+  grouped.forEach((items, layerId) => {
+    const layer = document.createElement("div");
+    layer.className = "map-resource-layer";
+    layer.id = `layer-${layerId}`;
+    layer.style.display = "none";
+
+    items.forEach((item) => {
+      const marker = document.createElement("button");
+      marker.type = "button";
+      marker.className = "map-resource-dot";
+      marker.style.left = `${item.x}%`;
+      marker.style.top = `${item.y}%`;
+      marker.style.setProperty("--resource-color", item.color);
+      marker.setAttribute("aria-label", item.name);
+      marker.innerHTML = `
+        <span class="map-resource-glyph">${item.iconHtml}</span>
+        <span class="map-resource-pulse"></span>
+      `;
+      layer.appendChild(marker);
+    });
+
+    overlayRoot.appendChild(layer);
+  });
+}
+
+function renderCollectionControls(sidebar, rows) {
+  const vegetationSection = sidebar.querySelector("#content2 .nojodas");
+  if (!vegetationSection || !rows.length) {
+    return;
+  }
+
+  vegetationSection.querySelector(".dynamic-collection-group")?.remove();
+
+  const grouped = rows.reduce((map, row) => {
+    if (!map.has(row.layerId)) {
+      map.set(row.layerId, row);
+    }
+
+    return map;
+  }, new Map());
+
+  const unresolved = [];
+
+  Array.from(grouped.values()).forEach((item, index) => {
+    const legacyLabel = Array.from(vegetationSection.querySelectorAll("label[data-toggle-target]")).find((label) => {
+      const text = label.textContent.replace(/\*/g, "").trim().toLowerCase();
+      return text === item.name.trim().toLowerCase();
+    });
+
+    if (legacyLabel) {
+      legacyLabel.dataset.toggleTarget = `layer-${item.layerId}`;
+      legacyLabel.classList.add("is-dynamic");
+      return;
+    }
+
+    unresolved.push({ item, index });
+  });
+
+  if (!unresolved.length) {
+    return;
+  }
+
+  const group = document.createElement("div");
+  group.className = "dynamic-collection-group";
+
+  const title = document.createElement("p");
+  title.className = "dynamic-collection-title";
+  title.textContent = "Capas por CSV";
+  group.appendChild(title);
+
+  unresolved.forEach(({ item, index }) => {
+    const input = document.createElement("input");
+    input.className = "checkbox-booking";
+    input.type = "checkbox";
+    input.name = "booking";
+    input.id = `dynamic-booking-${index + 1}`;
+
+    const label = document.createElement("label");
+    label.className = "for-checkbox-booking is-dynamic";
+    label.setAttribute("for", input.id);
+    label.dataset.toggleTarget = `layer-${item.layerId}`;
+    label.innerHTML = `<span class="text">${item.name}</span>`;
+
+    group.append(input, label);
+  });
+
+  vegetationSection.prepend(group);
 }
 
 function enhanceMarkers(mapContainer, sidebar, zoomApi) {
@@ -691,11 +827,15 @@ async function initializeMapPage() {
 
     const zoomApi = setupZoom(mapContainer, viewport, stage, baseImage);
     const mapLayer = ensureMapLayer(stage);
+    const overlayRoot = ensureOverlayRoot(stage);
     const markers = await getMarkerData(mapLayer);
+    const collectionRows = await getCollectionData();
 
     renderMarkers(mapLayer, markers);
+    renderCollectionLayers(overlayRoot, collectionRows);
     renderSidebarDetail(sidebar, null);
     enhanceMarkers(mapContainer, sidebar, zoomApi);
+    renderCollectionControls(sidebar, collectionRows);
     bindOverlayToggles();
 
     const editor = ensureCoordinateEditor(sidebar);

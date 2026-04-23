@@ -235,6 +235,77 @@ body {
   z-index: 4;
 }
 
+.map-overlay-root {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.map-resource-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.map-resource-dot {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.map-resource-glyph,
+.map-resource-pulse {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  transform: scale(calc(1 / var(--map-zoom, 1)));
+  transform-origin: center;
+}
+
+.map-resource-glyph {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--resource-color, #da4444) 82%, black);
+  color: #fff8f8;
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--resource-color, #da4444) 22%, transparent),
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.map-resource-pulse {
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--resource-color, #da4444) 68%, white);
+  border-radius: 50%;
+  opacity: 0.48;
+}
+
+.dynamic-collection-group {
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dynamic-collection-title {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.for-checkbox-booking.is-dynamic {
+  background: rgba(93, 35, 109, 0.42) !important;
+}
+
 .lugar1 {
   position: static;
 }
