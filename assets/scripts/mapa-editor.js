@@ -109,6 +109,8 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
     contentHeight: Math.max(baseImage?.naturalHeight || baseImage?.clientHeight || 1, 1)
   };
 
+  mapContainer.dataset.panDisabled = "false";
+
   stage.style.width = `${state.contentWidth}px`;
   stage.style.height = `${state.contentHeight}px`;
 
@@ -243,6 +245,10 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
       state.startZoom = state.zoom;
       viewport.classList.add("is-zooming");
     } else {
+      if (mapContainer.dataset.panDisabled === "true") {
+        return;
+      }
+
       state.mode = "pan";
       state.startX = event.clientX - state.x;
       state.startY = event.clientY - state.y;
@@ -318,6 +324,9 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
     },
     resumeInteractions() {
       state.interactionLock = false;
+    },
+    setPanEnabled(enabled) {
+      mapContainer.dataset.panDisabled = enabled ? "false" : "true";
     }
   };
 }
@@ -405,6 +414,7 @@ function createEditorState() {
     places: [],
     resources: [],
     selectedIndex: 0,
+    moveMode: false,
     dragging: null,
     zoomApi: null,
     overlayRoot: null,
@@ -653,6 +663,10 @@ function bindMarkerEvents(state, marker, mode, index) {
       return;
     }
 
+    if (!state.moveMode) {
+      return;
+    }
+
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
@@ -677,6 +691,12 @@ function renderEditor(state, options = {}) {
 
   document.querySelectorAll("[data-editor-mode]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.editorMode === state.mode);
+  });
+
+  document.querySelectorAll('[data-editor-action="toggle-move"]').forEach((button) => {
+    button.classList.toggle("is-active", state.moveMode);
+    button.setAttribute("aria-pressed", String(state.moveMode));
+    button.textContent = state.moveMode ? "Mover iconos: ON" : "Mover iconos";
   });
 }
 
@@ -773,7 +793,11 @@ function bindSidebarActions(state) {
     button.addEventListener("click", () => {
       const action = button.dataset.editorAction;
 
-      if (action === "new") {
+      if (action === "toggle-move") {
+        state.moveMode = !state.moveMode;
+        state.zoomApi.setPanEnabled(!state.moveMode);
+        renderEditor(state);
+      } else if (action === "new") {
         createNewItem(state);
       } else if (action === "duplicate") {
         duplicateCurrentItem(state);
@@ -865,6 +889,7 @@ async function initializeEditorPage() {
   state.overlayRoot = overlayRoot;
 
   state.zoomApi = setupZoom(mapContainer, viewport, stage, baseImage);
+  state.zoomApi.setPanEnabled(true);
   state.places = (await loadCsvRows("./data/mapa-puntos.csv")).map(normalizePlaceRow);
   state.resources = (await loadCsvRows("./data/mapa-recoleccion.csv")).map(normalizeResourceRow);
 
