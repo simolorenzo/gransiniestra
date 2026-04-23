@@ -294,7 +294,7 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
 
 const MAP_HEADERS = {
   places: ["id", "title", "x", "y", "marker_html", "title_html", "body_html"],
-  resources: ["layer_id", "category", "name", "x", "y", "color", "icon_html"]
+  resources: ["layer_id", "category", "subtype", "name", "x", "y", "color", "icon_html"]
 };
 
 const FORM_FIELDS = {
@@ -310,6 +310,7 @@ const FORM_FIELDS = {
   resources: [
     { key: "layer_id", label: "Layer ID", type: "text" },
     { key: "category", label: "Categoría", type: "text" },
+    { key: "subtype", label: "Subtipo", type: "text" },
     { key: "name", label: "Nombre", type: "text" },
     { key: "x", label: "X", type: "number", step: "0.01" },
     { key: "y", label: "Y", type: "number", step: "0.01" },
@@ -334,6 +335,7 @@ function defaultResource(index) {
   return {
     layer_id: `nuevo-recurso-${index}`,
     category: "vegetacion",
+    subtype: "subtipo",
     name: "Nuevo recurso",
     x: 50,
     y: 50,
@@ -358,6 +360,7 @@ function normalizeResourceRow(row, index) {
   return {
     layer_id: row.layer_id || `recurso-${index + 1}`,
     category: row.category || "general",
+    subtype: row.subtype || "subtipo",
     name: row.name || `Recurso ${index + 1}`,
     x: Number.parseFloat(String(row.x).replace(",", ".")) || 0,
     y: Number.parseFloat(String(row.y).replace(",", ".")) || 0,
@@ -409,16 +412,61 @@ function renderList(state) {
     return;
   }
 
-  dataset.forEach((item, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `editor-list-item${index === state.selectedIndex ? " is-active" : ""}`;
-    button.textContent = state.mode === "places" ? item.title : `${item.name} · ${item.layer_id}`;
-    button.addEventListener("click", () => {
-      state.selectedIndex = index;
-      renderEditor(state);
+  if (state.mode === "places") {
+    dataset.forEach((item, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `editor-list-item${index === state.selectedIndex ? " is-active" : ""}`;
+      button.textContent = item.title;
+      button.addEventListener("click", () => {
+        state.selectedIndex = index;
+        renderEditor(state);
+      });
+      state.listNode.appendChild(button);
     });
-    state.listNode.appendChild(button);
+    return;
+  }
+
+  const grouped = dataset.reduce((map, item, index) => {
+    const category = item.category || "general";
+    const subtype = item.subtype || "subtipo";
+
+    if (!map.has(category)) {
+      map.set(category, new Map());
+    }
+
+    if (!map.get(category).has(subtype)) {
+      map.get(category).set(subtype, []);
+    }
+
+    map.get(category).get(subtype).push({ item, index });
+    return map;
+  }, new Map());
+
+  grouped.forEach((subtypes, category) => {
+    const categoryHeading = document.createElement("div");
+    categoryHeading.className = "editor-group-heading";
+    categoryHeading.textContent = category;
+    state.listNode.appendChild(categoryHeading);
+
+    subtypes.forEach((items, subtype) => {
+      const subtypeHeading = document.createElement("div");
+      subtypeHeading.className = "editor-subgroup-heading";
+      subtypeHeading.textContent = subtype;
+      state.listNode.appendChild(subtypeHeading);
+
+      items.forEach(({ item, index }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `editor-list-item${index === state.selectedIndex ? " is-active" : ""}`;
+        button.textContent = `${item.name} · ${item.layer_id}`;
+        button.addEventListener("click", () => {
+          state.selectedIndex = index;
+          renderEditor(state);
+        });
+        state.listNode.appendChild(button);
+      });
+    });
   });
 }
 
@@ -525,13 +573,31 @@ function renderMarkers(state) {
   state.overlayRoot.append(placeLayer, resourceLayer);
 }
 
+function syncActiveMarkerStyles(state) {
+  state.overlayRoot.querySelectorAll(".editor-marker").forEach((marker) => {
+    const markerMode = marker.dataset.mode;
+    const markerIndex = Number(marker.dataset.index);
+    const isSelected = markerMode === state.mode && markerIndex === state.selectedIndex;
+    const isMuted = markerMode !== state.mode;
+
+    marker.classList.toggle("is-selected", isSelected);
+    marker.classList.toggle("is-muted", isMuted);
+  });
+}
+
 function bindMarkerEvents(state, marker, mode, index) {
+  marker.dataset.mode = mode;
+  marker.dataset.index = String(index);
+
   marker.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
     state.mode = mode;
     state.selectedIndex = index;
-    renderEditor(state);
+    syncActiveMarkerStyles(state);
+    renderList(state);
+    renderForm(state);
+    renderPreview(state);
   });
 
   marker.addEventListener("pointerdown", (event) => {
@@ -544,8 +610,10 @@ function bindMarkerEvents(state, marker, mode, index) {
     state.mode = mode;
     state.selectedIndex = index;
     state.dragging = { mode, index };
-    state.viewport.setPointerCapture(event.pointerId);
-    renderEditor(state);
+    syncActiveMarkerStyles(state);
+    renderList(state);
+    renderForm(state);
+    renderPreview(state);
   });
 }
 
@@ -601,6 +669,7 @@ function duplicateCurrentItem(state) {
   } else {
     clone.layer_id = `${clone.layer_id}-copy`;
     clone.name = `${clone.name} copia`;
+    clone.subtype = clone.subtype || "subtipo";
     state.resources.splice(state.selectedIndex + 1, 0, clone);
   }
 
@@ -675,7 +744,7 @@ function bindSidebarActions(state) {
 }
 
 function bindDragEditing(state) {
-  state.viewport.addEventListener("pointermove", (event) => {
+  window.addEventListener("pointermove", (event) => {
     if (!state.dragging) {
       return;
     }
@@ -705,9 +774,8 @@ function bindDragEditing(state) {
     state.dragging = null;
   };
 
-  state.viewport.addEventListener("pointerup", stopDragging);
-  state.viewport.addEventListener("pointercancel", stopDragging);
-  state.viewport.addEventListener("pointerleave", stopDragging);
+  window.addEventListener("pointerup", stopDragging);
+  window.addEventListener("pointercancel", stopDragging);
 }
 
 async function initializeEditorPage() {

@@ -354,6 +354,24 @@ body {
   overflow-y: auto;
 }
 
+.editor-group-heading,
+.editor-subgroup-heading {
+  color: var(--muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.editor-group-heading {
+  margin-top: 10px;
+  font-size: 0.7rem;
+}
+
+.editor-subgroup-heading {
+  margin-top: 4px;
+  font-size: 0.64rem;
+  opacity: 0.8;
+ }
+
 .editor-list-item {
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -440,6 +458,7 @@ textarea.editor-field-control {
   background: transparent;
   transform: translate(-50%, -50%);
   cursor: grab;
+  touch-action: none;
 }
 
 .editor-marker.is-muted {

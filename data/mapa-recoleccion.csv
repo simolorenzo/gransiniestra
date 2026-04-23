@@ -1,4 +1,4 @@
-layer_id,category,name,x,y,color,icon_html
-flor-de-la-noche,vegetacion,Flor de la Noche,74.80,31.60,#f3b3ff,"<span class=""fas fa-spa""></span>"
-flor-de-la-noche,vegetacion,Flor de la Noche,82.10,27.90,#f3b3ff,"<span class=""fas fa-spa""></span>"
-flor-de-la-noche,vegetacion,Flor de la Noche,89.10,29.70,#f3b3ff,"<span class=""fas fa-spa""></span>"
+layer_id,category,subtype,name,x,y,color,icon_html
+flor-de-la-noche,vegetacion,flores-nocturnas,Flor de la Noche,74.80,31.60,#f3b3ff,"<span class=""fas fa-spa""></span>"
+flor-de-la-noche,vegetacion,flores-nocturnas,Flor de la Noche,82.10,27.90,#f3b3ff,"<span class=""fas fa-spa""></span>"
+flor-de-la-noche,vegetacion,flores-nocturnas,Flor de la Noche,89.10,29.70,#f3b3ff,"<span class=""fas fa-spa""></span>"
