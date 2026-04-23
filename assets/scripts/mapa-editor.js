@@ -212,7 +212,7 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   viewport.addEventListener(
     "wheel",
     (event) => {
-      if (state.interactionLock) {
+      if (state.interactionLock || event.defaultPrevented) {
         return;
       }
 
@@ -227,7 +227,7 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   );
 
   viewport.addEventListener("pointerdown", (event) => {
-    if (state.interactionLock) {
+    if (state.interactionLock || event.defaultPrevented) {
       return;
     }
 
@@ -254,7 +254,7 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   });
 
   viewport.addEventListener("pointermove", (event) => {
-    if (state.interactionLock) {
+    if (state.interactionLock || event.defaultPrevented) {
       return;
     }
 
@@ -655,6 +655,7 @@ function bindMarkerEvents(state, marker, mode, index) {
 
     event.preventDefault();
     event.stopPropagation();
+    event.stopImmediatePropagation();
     state.mode = mode;
     state.selectedIndex = index;
     state.dragging = { mode, index, pointerId: event.pointerId, marker };
