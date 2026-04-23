@@ -306,6 +306,181 @@ body {
   background: rgba(93, 35, 109, 0.42) !important;
 }
 
+.map-editor-page .map-layout {
+  grid-template-columns: minmax(360px, 440px) minmax(0, 1fr);
+}
+
+.editor-sidebar {
+  gap: 0;
+}
+
+.editor-button-row,
+.editor-button-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.editor-button-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.editor-chip,
+.editor-action-button {
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.editor-chip:hover,
+.editor-chip.is-active,
+.editor-action-button:hover {
+  border-color: rgba(218, 68, 68, 0.38);
+  background: rgba(218, 68, 68, 0.14);
+  transform: translateY(-1px);
+}
+
+.editor-item-list {
+  display: grid;
+  gap: 8px;
+  max-height: 240px;
+  margin-top: 14px;
+  overflow-y: auto;
+}
+
+.editor-list-item {
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.editor-list-item.is-active {
+  border-color: rgba(218, 68, 68, 0.38);
+  background: rgba(218, 68, 68, 0.14);
+}
+
+.editor-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.editor-field {
+  display: grid;
+  gap: 8px;
+}
+
+.editor-field-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.editor-field-control {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font: inherit;
+}
+
+textarea.editor-field-control {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.editor-csv-preview {
+  width: 100%;
+  min-height: 220px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(5, 5, 5, 0.74);
+  color: #f4d8d8;
+  font: 0.8rem/1.55 "IBM Plex Mono", monospace;
+  resize: vertical;
+}
+
+.editor-hint {
+  margin-top: 12px !important;
+}
+
+.map-editor-overlay-root {
+  z-index: 5;
+}
+
+.map-editor-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.editor-marker {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+}
+
+.editor-marker.is-muted {
+  opacity: 0.48;
+}
+
+.editor-marker.is-selected .editor-marker-glyph {
+  box-shadow:
+    0 0 0 10px rgba(218, 68, 68, 0.22),
+    0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+.editor-marker-glyph {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  min-height: 30px;
+  transform: scale(calc(1 / var(--map-zoom, 1)));
+  transform-origin: center;
+}
+
+.editor-marker-place .editor-marker-glyph {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f27474, #8f1f1f 72%);
+  box-shadow:
+    0 0 0 8px rgba(218, 68, 68, 0.14),
+    0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.editor-marker-resource .editor-marker-glyph {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--resource-color, #da4444) 82%, black);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--resource-color, #da4444) 22%, transparent),
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
 .lugar1 {
   position: static;
 }

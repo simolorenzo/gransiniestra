@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de mapa | Gran Siniestra</title>
+    <link href="https://nagoshiashumari.github.io/Rpg-Awesome/stylesheets/rpg-awesome.min.css" rel="stylesheet">
+    <link href="https://dl.dropbox.com/s/vpi3f9s7nhpe7v7/honeybee.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://solrainha.github.io/honeybee/honeybee.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/styles/main.css">
+    <link rel="stylesheet" href="./assets/styles/pages/mapa.css">
+    <script src="./assets/app.js" defer></script>
+    <script src="./assets/scripts/mapa-editor.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+      <div class="container inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-mark">GS</span>
+          <span>Gran Siniestra</span>
+        </a>
+        <nav class="nav">
+          <a href="./guias.html">Guías</a>
+          <a href="./mapa.html">Mapa</a>
+          <a href="./mapa-editor.html" aria-current="page">Editor</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="map-page map-editor-page">
+      <div class="container">
+        <div class="map-workspace">
+          <div class="map-layout">
+            <aside class="sidebar editor-sidebar">
+              <p>Editor visual del mismo mapa. Mueve puntos, crea nuevos y exporta los CSV para que el mapa normal refleje esos cambios.</p>
+
+              <section class="sidebar-section editor-mode-switch">
+                <div class="section-tag">Dataset activo</div>
+                <div class="editor-button-row">
+                  <button type="button" class="editor-chip is-active" data-editor-mode="places">Lugares</button>
+                  <button type="button" class="editor-chip" data-editor-mode="resources">Recolección</button>
+                </div>
+              </section>
+
+              <section class="sidebar-section editor-actions">
+                <div class="section-tag">Acciones</div>
+                <div class="editor-button-stack">
+                  <button type="button" class="editor-action-button" data-editor-action="new">Crear nuevo en el centro</button>
+                  <button type="button" class="editor-action-button" data-editor-action="duplicate">Duplicar seleccionado</button>
+                  <button type="button" class="editor-action-button" data-editor-action="delete">Borrar seleccionado</button>
+                </div>
+                <p class="muted editor-hint">Puedes arrastrar directamente cualquier icono del dataset activo.</p>
+              </section>
+
+              <section class="sidebar-section editor-list-panel">
+                <div class="section-tag">Elementos</div>
+                <div class="editor-item-list" data-editor-list></div>
+              </section>
+
+              <section class="sidebar-section editor-form-panel">
+                <div class="section-tag">Seleccionado</div>
+                <div class="editor-form" data-editor-form></div>
+              </section>
+
+              <section class="sidebar-section editor-export-panel">
+                <div class="section-tag">Exportar</div>
+                <div class="editor-button-row">
+                  <button type="button" class="editor-action-button" data-editor-export="copy">Copiar CSV actual</button>
+                  <button type="button" class="editor-action-button" data-editor-export="download">Descargar CSV actual</button>
+                </div>
+                <p class="muted editor-hint">El mapa normal y este editor leen los mismos CSV. Si sustituyes el archivo exportado, ambos quedan sincronizados.</p>
+                <textarea class="editor-csv-preview" data-editor-preview spellcheck="false"></textarea>
+              </section>
+            </aside>
+
+            <main class="map-container map-editor-canvas">
+              <img src="https://i.imgur.com/Mr40FCw.jpeg" alt="Mapa editable de Gran Siniestra" class="map-image">
+            </main>
+          </div>
+        </div>
+      </div>
+    </main>
+</body>
+</html>
