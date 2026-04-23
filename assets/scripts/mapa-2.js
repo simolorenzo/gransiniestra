@@ -113,7 +113,38 @@ function buildViewport(mapContainer) {
   viewport.appendChild(stage);
   mapContainer.replaceChildren(createMapToolbar(), viewport);
 
-  return { viewport, stage };
+  return {
+    viewport,
+    stage,
+    baseImage: stage.querySelector(".map-image")
+  };
+}
+
+function waitForImageReady(image) {
+  if (!image) {
+    return Promise.resolve();
+  }
+
+  if (image.complete && image.naturalWidth > 0) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    const handleLoad = () => {
+      image.removeEventListener("load", handleLoad);
+      image.removeEventListener("error", handleError);
+      resolve();
+    };
+
+    const handleError = () => {
+      image.removeEventListener("load", handleLoad);
+      image.removeEventListener("error", handleError);
+      reject(new Error("No se pudo cargar la imagen del mapa."));
+    };
+
+    image.addEventListener("load", handleLoad, { once: true });
+    image.addEventListener("error", handleError, { once: true });
+  });
 }
 
 function parsePercent(value) {
@@ -171,29 +202,59 @@ function renderSidebarDetail(sidebar, content) {
   `;
 }
 
-function setupZoom(mapContainer, viewport, stage) {
+function setupZoom(mapContainer, viewport, stage, baseImage) {
   const readout = mapContainer.querySelector(".map-zoom-readout");
   const state = {
     zoom: 1,
     minZoom: 1,
-    maxZoom: 3.5,
+    maxZoom: 4,
     x: 0,
     y: 0,
     mode: null,
     startX: 0,
     startY: 0,
     startZoom: 1,
-    dragging: false
+    dragging: false,
+    contentWidth: Math.max(baseImage?.naturalWidth || baseImage?.clientWidth || 1, 1),
+    contentHeight: Math.max(baseImage?.naturalHeight || baseImage?.clientHeight || 1, 1)
   };
+
+  stage.style.width = `${state.contentWidth}px`;
+  stage.style.height = `${state.contentHeight}px`;
 
   const clampPosition = () => {
     const width = viewport.clientWidth;
     const height = viewport.clientHeight;
-    const minX = width - width * state.zoom;
-    const minY = height - height * state.zoom;
+    const scaledWidth = state.contentWidth * state.zoom;
+    const scaledHeight = state.contentHeight * state.zoom;
+    const minX = width - scaledWidth;
+    const minY = height - scaledHeight;
 
     state.x = clamp(state.x, minX, 0);
     state.y = clamp(state.y, minY, 0);
+  };
+
+  const syncZoomBounds = (preserveCenter = true) => {
+    const viewportWidth = Math.max(viewport.clientWidth, 1);
+    const viewportHeight = Math.max(viewport.clientHeight, 1);
+    const previousZoom = state.zoom;
+    const centerX = (viewportWidth / 2 - state.x) / previousZoom;
+    const centerY = (viewportHeight / 2 - state.y) / previousZoom;
+
+    state.minZoom = Math.max(
+      viewportWidth / state.contentWidth,
+      viewportHeight / state.contentHeight
+    );
+    state.maxZoom = Math.max(state.minZoom * 5, state.minZoom + 2.5);
+    state.zoom = Math.max(state.zoom, state.minZoom);
+
+    if (preserveCenter) {
+      state.x = viewportWidth / 2 - centerX * state.zoom;
+      state.y = viewportHeight / 2 - centerY * state.zoom;
+    } else {
+      state.x = (viewportWidth - state.contentWidth * state.zoom) / 2;
+      state.y = (viewportHeight - state.contentHeight * state.zoom) / 2;
+    }
   };
 
   const applyTransform = () => {
@@ -202,7 +263,7 @@ function setupZoom(mapContainer, viewport, stage) {
     mapContainer.style.setProperty("--map-zoom", state.zoom.toFixed(3));
 
     if (readout) {
-      const label = `${Math.round(state.zoom * 100)}%`;
+      const label = `${Math.round((state.zoom / state.minZoom) * 100)}%`;
       readout.value = label;
       readout.textContent = label;
     }
@@ -226,9 +287,7 @@ function setupZoom(mapContainer, viewport, stage) {
   };
 
   const resetZoom = () => {
-    state.zoom = 1;
-    state.x = 0;
-    state.y = 0;
+    syncZoomBounds(false);
     applyTransform();
   };
 
@@ -237,8 +296,8 @@ function setupZoom(mapContainer, viewport, stage) {
       return;
     }
 
-    const x = (parsePercent(label.style.left) / 100) * viewport.clientWidth;
-    const y = (parsePercent(label.style.top) / 100) * viewport.clientHeight;
+    const x = (parsePercent(label.style.left) / 100) * state.contentWidth;
+    const y = (parsePercent(label.style.top) / 100) * state.contentHeight;
 
     state.x = viewport.clientWidth / 2 - x * state.zoom;
     state.y = viewport.clientHeight / 2 - y * state.zoom;
@@ -249,8 +308,8 @@ function setupZoom(mapContainer, viewport, stage) {
     const rect = viewport.getBoundingClientRect();
     const relativeX = clientX - rect.left;
     const relativeY = clientY - rect.top;
-    const mapX = ((relativeX - state.x) / state.zoom / viewport.clientWidth) * 100;
-    const mapY = ((relativeY - state.y) / state.zoom / viewport.clientHeight) * 100;
+    const mapX = ((relativeX - state.x) / state.zoom / state.contentWidth) * 100;
+    const mapY = ((relativeY - state.y) / state.zoom / state.contentHeight) * 100;
 
     return {
       x: clamp(mapX, 0, 100),
@@ -261,11 +320,12 @@ function setupZoom(mapContainer, viewport, stage) {
   mapContainer.querySelectorAll("[data-action]").forEach((button) => {
     button.addEventListener("click", () => {
       const action = button.dataset.action;
+      const step = Math.max(state.minZoom * 0.2, 0.12);
 
       if (action === "zoom-in") {
-        zoomTo(state.zoom + 0.2);
+        zoomTo(state.zoom + step);
       } else if (action === "zoom-out") {
-        zoomTo(state.zoom - 0.2);
+        zoomTo(state.zoom - step);
       } else {
         resetZoom();
       }
@@ -283,7 +343,7 @@ function setupZoom(mapContainer, viewport, stage) {
       const rect = viewport.getBoundingClientRect();
       const originX = event.clientX - rect.left;
       const originY = event.clientY - rect.top;
-      const delta = event.deltaY < 0 ? 0.16 : -0.16;
+      const delta = event.deltaY < 0 ? Math.max(state.minZoom * 0.16, 0.1) : -Math.max(state.minZoom * 0.16, 0.1);
       zoomTo(state.zoom + delta, originX, originY);
     },
     { passive: false }
@@ -319,7 +379,7 @@ function setupZoom(mapContainer, viewport, stage) {
 
     if (state.mode === "zoom") {
       const deltaY = state.startY - event.clientY;
-      zoomTo(state.startZoom + deltaY * 0.005);
+      zoomTo(state.startZoom + deltaY * Math.max(state.minZoom * 0.004, 0.0035));
       return;
     }
 
@@ -359,7 +419,12 @@ function setupZoom(mapContainer, viewport, stage) {
   viewport.addEventListener("pointercancel", stopDragging);
   viewport.addEventListener("pointerleave", stopDragging);
 
-  window.addEventListener("resize", applyTransform);
+  window.addEventListener("resize", () => {
+    syncZoomBounds(true);
+    applyTransform();
+  });
+
+  syncZoomBounds(false);
   applyTransform();
 
   return { centerOnMarker, resetZoom, screenToMap };
@@ -620,10 +685,11 @@ async function initializeMapPage() {
   try {
     moveCollectionsIntoSidebar(sidebar);
 
-    const { viewport, stage } = buildViewport(mapContainer);
+    const { viewport, stage, baseImage } = buildViewport(mapContainer);
     mapContainer.classList.add("is-enhanced");
+    await waitForImageReady(baseImage);
 
-    const zoomApi = setupZoom(mapContainer, viewport, stage);
+    const zoomApi = setupZoom(mapContainer, viewport, stage, baseImage);
     const mapLayer = ensureMapLayer(stage);
     const markers = await getMarkerData(mapLayer);
 
