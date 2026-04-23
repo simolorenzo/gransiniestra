@@ -502,6 +502,7 @@ function renderForm(state) {
     }
 
     control.className = "editor-field-control";
+    control.dataset.fieldKey = field.key;
     control.value = item[field.key] ?? "";
     control.spellcheck = false;
 
@@ -528,6 +529,23 @@ function renderForm(state) {
     wrapper.append(label, control);
     state.formNode.appendChild(wrapper);
   });
+}
+
+function updateFormCoordinateFields(state, item) {
+  if (!item) {
+    return;
+  }
+
+  const xField = state.formNode.querySelector('[data-field-key="x"]');
+  const yField = state.formNode.querySelector('[data-field-key="y"]');
+
+  if (xField) {
+    xField.value = Number(item.x).toFixed(2);
+  }
+
+  if (yField) {
+    yField.value = Number(item.y).toFixed(2);
+  }
 }
 
 function renderPreview(state) {
@@ -609,7 +627,8 @@ function bindMarkerEvents(state, marker, mode, index) {
     event.stopPropagation();
     state.mode = mode;
     state.selectedIndex = index;
-    state.dragging = { mode, index };
+    state.dragging = { mode, index, pointerId: event.pointerId, marker };
+    marker.setPointerCapture(event.pointerId);
     syncActiveMarkerStyles(state);
     renderList(state);
     renderForm(state);
@@ -745,7 +764,7 @@ function bindSidebarActions(state) {
 
 function bindDragEditing(state) {
   window.addEventListener("pointermove", (event) => {
-    if (!state.dragging) {
+    if (!state.dragging || event.pointerId !== state.dragging.pointerId) {
       return;
     }
 
@@ -759,19 +778,31 @@ function bindDragEditing(state) {
 
     item.x = point.x;
     item.y = point.y;
+    state.dragging.marker.style.left = `${point.x}%`;
+    state.dragging.marker.style.top = `${point.y}%`;
 
     if (state.mode !== state.dragging.mode) {
       state.mode = state.dragging.mode;
       state.selectedIndex = state.dragging.index;
-    } else {
-      state.selectedIndex = state.dragging.index;
     }
 
-    renderEditor(state);
+    updateFormCoordinateFields(state, item);
+    renderPreview(state);
   });
 
-  const stopDragging = () => {
+  const stopDragging = (event) => {
+    if (!state.dragging || (event?.pointerId !== undefined && event.pointerId !== state.dragging.pointerId)) {
+      return;
+    }
+
+    try {
+      state.dragging.marker.releasePointerCapture(state.dragging.pointerId);
+    } catch (_error) {
+      // Ignore release failures if capture was already lost.
+    }
+
     state.dragging = null;
+    renderEditor(state);
   };
 
   window.addEventListener("pointerup", stopDragging);
