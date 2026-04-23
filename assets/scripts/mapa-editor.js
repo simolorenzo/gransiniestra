@@ -674,7 +674,6 @@ function bindMarkerEvents(state, marker, mode, index) {
     state.selectedIndex = index;
     state.dragging = { mode, index, pointerId: event.pointerId, marker };
     state.zoomApi.suspendInteractions();
-    marker.setPointerCapture(event.pointerId);
     syncActiveMarkerStyles(state);
     renderList(state);
     renderForm(state);
@@ -849,12 +848,6 @@ function bindDragEditing(state) {
   const stopDragging = (event) => {
     if (!state.dragging || (event?.pointerId !== undefined && event.pointerId !== state.dragging.pointerId)) {
       return;
-    }
-
-    try {
-      state.dragging.marker.releasePointerCapture(state.dragging.pointerId);
-    } catch (_error) {
-      // Ignore release failures if capture was already lost.
     }
 
     state.dragging = null;

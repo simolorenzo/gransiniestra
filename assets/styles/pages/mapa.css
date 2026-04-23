@@ -451,14 +451,15 @@ textarea.editor-field-control {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 0;
-  height: 0;
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: 0;
   background: transparent;
   transform: translate(-50%, -50%);
   cursor: grab;
   touch-action: none;
+  pointer-events: auto;
 }
 
 .editor-marker.is-muted {
@@ -478,6 +479,7 @@ textarea.editor-field-control {
   min-height: 30px;
   transform: scale(calc(1 / var(--map-zoom, 1)));
   transform-origin: center;
+  pointer-events: none;
 }
 
 .editor-marker-place .editor-marker-glyph {
