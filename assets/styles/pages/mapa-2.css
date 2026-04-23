@@ -389,15 +389,31 @@ body {
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 631 / 795;
   min-height: 0;
-  min-height: 680px;
   height: auto;
   overflow: hidden;
   border: 1px solid var(--border);
 }
 
-.map-toolbar {
+.map-container > .map-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+.map-container:not(.is-enhanced) .map-toolbar,
+.map-container:not(.is-enhanced) .map-viewport {
+  display: none;
+}
+
+.map-container.is-enhanced {
+  aspect-ratio: 631 / 795;
+  min-height: 680px;
+}
+
+.map-container.is-enhanced .map-toolbar {
   position: relative;
   z-index: 8;
   display: flex;
@@ -408,18 +424,18 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.map-toolbar-copy p {
+.map-container.is-enhanced .map-toolbar-copy p {
   margin: 6px 0 0;
   font-size: 0.92rem;
 }
 
-.map-toolbar-actions {
+.map-container.is-enhanced .map-toolbar-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.map-zoom-button {
+.map-container.is-enhanced .map-zoom-button {
   min-width: 42px;
   height: 42px;
   border: 1px solid var(--border);
@@ -431,25 +447,25 @@ body {
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
-.map-zoom-reset {
+.map-container.is-enhanced .map-zoom-reset {
   min-width: 72px;
   border-radius: 999px;
 }
 
-.map-zoom-button:hover {
+.map-container.is-enhanced .map-zoom-button:hover {
   background: rgba(218, 68, 68, 0.14);
   border-color: rgba(218, 68, 68, 0.44);
   transform: translateY(-1px);
 }
 
-.map-zoom-readout {
+.map-container.is-enhanced .map-zoom-readout {
   min-width: 58px;
   text-align: center;
   color: var(--muted);
   font-weight: 600;
 }
 
-.map-viewport {
+.map-container.is-enhanced .map-viewport {
   position: relative;
   width: 100%;
   height: 100%;
@@ -461,11 +477,11 @@ body {
     #050505;
 }
 
-.map-viewport.is-dragging {
+.map-container.is-enhanced .map-viewport.is-dragging {
   cursor: grabbing;
 }
 
-.map-stage {
+.map-container.is-enhanced .map-stage {
   position: absolute;
   inset: 0;
   transform-origin: 0 0;
@@ -473,8 +489,8 @@ body {
   touch-action: none;
 }
 
-.map-container img,
-.map-stage .map-image {
+.map-container.is-enhanced img,
+.map-container.is-enhanced .map-stage .map-image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -516,7 +532,7 @@ body {
   display: none;
 }
 
-.lugar label.map-marker .marker-glyph {
+.map-container.is-enhanced .lugar label.map-marker .marker-glyph {
   display: grid;
   place-items: center;
   width: 30px;
@@ -532,9 +548,9 @@ body {
   transition: box-shadow 0.16s ease, background 0.16s ease;
 }
 
-.lugar label.map-marker.is-selected .marker-glyph,
-.lugar label.map-marker:hover .marker-glyph,
-.lugar label.map-marker:focus-visible .marker-glyph {
+.map-container.is-enhanced .lugar label.map-marker.is-selected .marker-glyph,
+.map-container.is-enhanced .lugar label.map-marker:hover .marker-glyph,
+.map-container.is-enhanced .lugar label.map-marker:focus-visible .marker-glyph {
   background: radial-gradient(circle at 30% 30%, #ffd7a8, #da4444 76%);
   box-shadow:
     0 0 0 10px rgba(218, 68, 68, 0.2),
@@ -633,7 +649,7 @@ body {
     position: static;
   }
 
-  .map-container {
+  .map-container.is-enhanced {
     min-height: 540px;
   }
 }
@@ -655,7 +671,7 @@ body {
     height: 48px;
   }
 
-  .map-container {
+  .map-container.is-enhanced {
     min-height: 420px;
   }
 }

@@ -332,6 +332,7 @@ function initializeMapPage() {
 
   try {
     const { viewport, stage } = buildViewport(mapContainer);
+    mapContainer.classList.add("is-enhanced");
     const zoomApi = setupZoom(mapContainer, viewport, stage);
 
     bindOverlayToggles();
