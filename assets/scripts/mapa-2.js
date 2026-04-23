@@ -330,11 +330,15 @@ function initializeMapPage() {
     return;
   }
 
-  const { viewport, stage } = buildViewport(mapContainer);
-  const zoomApi = setupZoom(mapContainer, viewport, stage);
+  try {
+    const { viewport, stage } = buildViewport(mapContainer);
+    const zoomApi = setupZoom(mapContainer, viewport, stage);
 
-  bindOverlayToggles();
-  enhanceMarkers(mapContainer, sidebar, zoomApi);
+    bindOverlayToggles();
+    enhanceMarkers(mapContainer, sidebar, zoomApi);
+  } catch (error) {
+    console.error("No se pudo inicializar el visor del mapa.", error);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initializeMapPage);
