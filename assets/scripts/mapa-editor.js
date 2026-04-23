@@ -104,6 +104,7 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
     startY: 0,
     startZoom: 1,
     dragging: false,
+    interactionLock: false,
     contentWidth: Math.max(baseImage?.naturalWidth || baseImage?.clientWidth || 1, 1),
     contentHeight: Math.max(baseImage?.naturalHeight || baseImage?.clientHeight || 1, 1)
   };
@@ -211,6 +212,10 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   viewport.addEventListener(
     "wheel",
     (event) => {
+      if (state.interactionLock) {
+        return;
+      }
+
       event.preventDefault();
       const rect = viewport.getBoundingClientRect();
       const originX = event.clientX - rect.left;
@@ -222,6 +227,10 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   );
 
   viewport.addEventListener("pointerdown", (event) => {
+    if (state.interactionLock) {
+      return;
+    }
+
     if (event.target.closest(".editor-marker, .map-toolbar, .map-zoom-button")) {
       return;
     }
@@ -245,6 +254,10 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   });
 
   viewport.addEventListener("pointermove", (event) => {
+    if (state.interactionLock) {
+      return;
+    }
+
     if (!state.dragging) {
       return;
     }
@@ -261,6 +274,10 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   });
 
   const stopDragging = (event) => {
+    if (state.interactionLock) {
+      return;
+    }
+
     if (!state.dragging) {
       return;
     }
@@ -289,7 +306,20 @@ function setupZoom(mapContainer, viewport, stage, baseImage) {
   syncZoomBounds(false);
   applyTransform();
 
-  return { screenToMap, resetZoom };
+  return {
+    screenToMap,
+    resetZoom,
+    suspendInteractions() {
+      state.interactionLock = true;
+      state.dragging = false;
+      state.mode = null;
+      viewport.classList.remove("is-dragging");
+      viewport.classList.remove("is-zooming");
+    },
+    resumeInteractions() {
+      state.interactionLock = false;
+    }
+  };
 }
 
 const MAP_HEADERS = {
@@ -628,6 +658,7 @@ function bindMarkerEvents(state, marker, mode, index) {
     state.mode = mode;
     state.selectedIndex = index;
     state.dragging = { mode, index, pointerId: event.pointerId, marker };
+    state.zoomApi.suspendInteractions();
     marker.setPointerCapture(event.pointerId);
     syncActiveMarkerStyles(state);
     renderList(state);
@@ -802,6 +833,7 @@ function bindDragEditing(state) {
     }
 
     state.dragging = null;
+    state.zoomApi.resumeInteractions();
     renderEditor(state);
   };
 
