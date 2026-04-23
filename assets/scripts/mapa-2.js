@@ -294,6 +294,8 @@ function setupZoom(mapContainer, viewport, stage) {
       return;
     }
 
+    event.preventDefault();
+
     if (event.button === 2) {
       state.mode = "zoom";
       state.startY = event.clientY;
@@ -342,6 +344,14 @@ function setupZoom(mapContainer, viewport, stage) {
   };
 
   viewport.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
+
+  viewport.addEventListener("dragstart", (event) => {
+    event.preventDefault();
+  });
+
+  viewport.addEventListener("selectstart", (event) => {
     event.preventDefault();
   });
 
