@@ -1,0 +1,87 @@
+﻿"id","title","x","y","marker_html","title_html","body_html"
+"finur","Finur","54","0","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Finur","La ciudad más al norte de Gran Siniestra, así como el más frío.<br>Se cree que es el sitio donde los Kal'arch guardan todas sus posesiones más valiosas y los tesoros que durante generaciones consiguió el reino de Lorentia.<br><br><h1>VEGETACIÓN:</h1> Acónito, Welwitschia, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1> Draco</br>
+            <h1>MINERALES:</h1> Hierro"
+"melgar","Mêlgar","57","28","<span class=""ra ra-kaleidoscope"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""ra ra-kaleidoscope"" style=""font-size:20px;""></span>Mêlgar","Famoso por sus ruinas de enanos.<br>Una importante zona minera con grandes recursos de los mejores materiales.<br><br>Recibe el mismo nombre la península donde se encuentra, y separado de Lorhestiel está por el Mar Brannthôr, este mar sufrió antaño un gran desprendimiento de diferentes minerales de las costas de Mêlgar, que transformaron en tóxicas sus aguas. Además, al estar lleno de pequeños islotes, rocas y riscos, hay gran cantidad de nidos de sirenas y arpías, lo que lo hace un mar poco recomendable para navegar.<br><br><h1>VEGETACIÓN:</h1>Espino de Hart, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1>Quimera, Las'kram, Vieszcy</br><h1>MINERALES:</h1>Mercurio, Plata</br><h1>COMIDA:</h1>Carne de Caza, Patata"
+"ciudadela","Ciudadela","61","5","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Ciudadela","Ciudad norteña, bastión de la casa Rahdun.<br>Su nombre viene de la antigua Ciudadela que había allí, lugar de estudio y reflexión del que salieron grandes filósofos, alquimistas, médicos, y que siempre han favorecido a la casa Kal'arch.<br><br><h1>VEGETACIÓN:</h1> Acónito, Welwitschia, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1> Draco"
+"brumhanv","Brumhanv","58","3.5","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Brumhanv","Ciudad en la isla Draugrkas, importante por su puerto y habilidad pesquera, que alimenta a gran parte del territorio Kal'arch.<br>Es la ciudad de la casa Vallza.<br><br><h1>VEGETACIÓN:</h1> Acónito, Welwitschia, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1> Draco, Wyvern<br>
+              <h1>ALIMENTOS:</h1> Fresas, Trucha, Salmón, Lubina."
+"norvigar","Norvigar","60.5","11","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Norvigar","Ciudad en el valle entre grandes peñascos y precipicios.<br>Es la ciudad de la casa Kev'red.<br><br><h1>VEGETACIÓN:</h1> Acónito, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1> Draco, Arpía"
+"fuerte-desolacion","Fuerte Desolación","66","14","<span class=""fas fa-chess-rook"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Fuerte Desolación","Ciudad clave del paso de mercancías y viajeros hacia el norte.<br>Es la ciudad de la casa Ard.<br><br><h1>VEGETACIÓN:</h1> Acónito, Pino del Diablo, Raíz de Mandrágora</br>
+            <h1>MONSTRUOS:</h1> Draco, Arpía<br>
+ <h1>ALIMENTOS:</h1> Patatas, Fresas y Carne de Caza."
+"villa-refugio","Villa Refugio","67","11.5","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Villa Refugio","Pequeña aldea fundada por viajeros que recorrían el norte y debían buscar refugio durante tormentas o grandes nevadas.<br><br><h1>VEGETACIÓN:</h1> Acónito, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1> Draco, Arpía<br>
+ <h1>ALIMENTOS:</h1> Setas, Bayas."
+"edhen","Edhen","61","-0.5","<span class=""ra ra-kaleidoscope"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""ra ra-kaleidoscope"" style=""font-size:20px;""></span>Edhen","Paisaje completamente helado. Una gran zona blanca de frío extremo.<br><br>Está separado del continente por un gran lago, normalmente helado.<br><br><h1>VEGETACIÓN:</h1>Acónito, Welwitschia, Pino del Diablo</br><h1>MONSTRUOS:</h1>Draco, Cocatriz, Arpía"
+"bosque-blanco","Bosque Blanco","59","11","<span class=""fab fa-pagelines"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""fab fa-pagelines"" style=""font-size:20px;""></span>Bosque Blanco","Un gran area de vegetación poco espesa completamente blanca debido a la nieve.<br><br><h1>VEGETACIÓN:</h1>Bejín, Espino de Hart, Pino del Diablo</br><h1>MONSTRUOS:</h1>Garuba, Espina Roja, Arpía, Lisovik</br><h1>COMIDA:</h1>Carne de Caza, Patata, Huevo"
+"bastion-espanto","Bastión Espanto","55.5","16","<span class=""fas fa-chess-rook"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Bastión Espanto","Bartión fortificado donde los Kal'arch han entrenado a su ejército durante generaciones.<br>Con el tiempo, al rededor de la fortificación se fueron creando casas y comercios locales para dar cobijo a los soldados que allí vivían.<br><br><h1>VEGETACIÓN:</h1> Acónito, Pino del Diablo, Raíz de Mandrágora</br>
+            <h1>MONSTRUOS:</h1> Draco, Arpía<br>
+ <h1>ALIMENTOS:</h1> Patatas, Fresas y Carne de Caza."
+"cordillera-val-linde","Cordillera Val-Linde","57.5","21","<span class=""fas fa-mountain"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""fas fa-mountain"" style=""font-size:20px;""></span>Cordillera Val-Linde","Un gran area de vegetación poco espesa completamente blanca debido a la nieve.<br><br>Entre los valles más ocultos de estas montañas se encuentra una sociedad secreta élfica llamada Sel Delmah, Nuevo Hogar. En esta zona, asentados unas ruinas enanas, tiene lugar la vida social elfa, así como el comercio y otras actividades relacionadas, mientras que la vida cotidiana la realizan en el interior de la montaña. Estas cavidades internas están aún más escondidas que las ruinas enanas, y sirven de refugio a familias y niños.<br><br><h1>VEGETACIÓN:</h1>Bejín, Espino de Hart, Pino del Diablo</br>            <h1>MONSTRUOS:</h1>Garuba, Espina Roja, Arpía, Lisovik"
+"fuerte-bruma","Fuerte Bruma","55","20.5","<span class=""fas fa-chess-rook"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Fuerte Bruma","Un pequeño fuerte rodeado siempre de brumas y niebla<br><br>Entre los valles más ocultos de estas montañas se encuentra una sociedad secreta élfica llamada Sel Delmah, Nuevo Hogar. En esta zona, asentados unas ruinas enanas, tiene lugar la vida social elfa, así como el comercio y otras actividades relacionadas, mientras que la vida cotidiana la realizan en el interior de la montaña. Estas cavidades internas están aún más escondidas que las ruinas enanas, y sirven de refugio a familias y niños.<br><br><h1>VEGETACIÓN:</h1>Bejín, Espino de Hart, Pino del Diablo</br>            <h1>MONSTRUOS:</h1>Garuba, Espina Roja, Arpía, Lisovik"
+"fjorndal","Fjorndal","71.2","14.3","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Fjorndal","Pequeño pueblo costero que une el continente con la isla de Fjorndal.<br><br><h1>VEGETACIÓN:</h1> Espino de Haart</br>
+            <h1>MONSTRUOS:</h1> Cocatriz, Sirena<br>
+ <h1>ALIMENTOS:</h1> Salmón, Bayas, Vino"
+"montanas-de-fjorndal","Montañas de Fjorndal","72.3","13","<span class=""fas fa-mountain"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-mountain"" style=""font-size:20px;""></span>Montañas de Fjorndal","La isla de Fjorndal es pequeña y deshabitada. Sin embargo tiene unas montañas a las que suelen acudir muchos mineros para extraer pólvora.<br><br><h1>VEGETACIÓN:</h1> Reina de la Noche</br>
+            <h1>MINERALES:</h1> Pólvora<br>
+            <h1>MONSTRUOS:</h1> Kathakano<br>"
+"alta-sanabria","Alta Sanabria","66.2","18.5","<span class=""fab fa-fort-awesome"" style=""color:#a11011;font-size:18px;"">
+            </span>","<span class=""fab fa-fort-awesome"" style=""font-size:20px;""></span>Alta Sanabria","La mayor ciudad del norte. Antigua capital de Lorentia y actual residencia del núcle familiar de los Kal'arch.<br><br>Durante el verano es una zona calmada, pero durante el invierno sufren constantes ventiscas y grandes nevadas.
+<br><br><h1>VEGETACIÓN:</h1>Acónito, Drupa de Mirlo, Milenrama, Pino del Diablo</br>            <h1>MONSTRUOS:</h1>Draco, Cocatriz, Arpía"
+"baja-sanabria","Baja Sanabria","67.5","24","<span class=""fas fa-chess-rook"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Baja Sanabria","Ciudad mercante de la zona norte.<br><br>Se encuentra antes de Alta Sanabria, y sirve como paso fronterizo para los extranjeros, pues las frías condiciones climatológicas hacen el viaje hasta esta ciudad muy complejo.<br><br><h1>VEGETACIÓN:</h1>Acónito, Espino de Hart, Pino del Diablo</br>
+            <h1>MONSTRUOS:</h1>Wyvern, Draco"
+"batun","Batún","49.3","15.5","<span class=""fas fa-chess-rook"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Batún","En un complejo territorio lleno de lagos se encuentra Batún, la ciudad astillera por excelencia, además de ser la segunda ciudad más grande del norte detrás de Alta Sanabria.<br><br>En esta ciudad se pueden encontrar grandes expertos náuticos y grandes cazadores y pescadores.<br><br>Se dice que esta ciudad dió vida a la legendaria Armada Invencible con la que la gente del norte logró invadir el norte y la isla Zinugul antaño.<br><br><h1>VEGETACIÓN:</h1>Coral Azúl, Drupa de Mirlo, Brionia Dioica</br>
+            <h1>MONSTRUOS:</h1>Draco, Sirena, Arpía"
+"region-lohrestiel","Región Lohrestiel","47","18","<span class=""ra ra-kaleidoscope"" style=""color:#a11011;font-size:14px;"">
+            </span>","<span class=""ra ra-kaleidoscope"" style=""font-size:20px;""></span>Región Lohrestiel","Una tranquila zona donde antaño estaba el antiguo reino elfo Lorhestiel, y que da nombre a los actuales Lohres, pues allí fue donde se encontraron las primeras runas y el primer rastro de magia a partir del cual los humanos aprendieron a manejarla.
+<br><br><h1>VEGETACIÓN:</h1>Brionia Dioica, Milenrama</br>            <h1>MONSTRUOS:</h1>Garuba, Sirena, Arpía, Las'kram</br><h1>COMIDA:</h1>Carne de Caza, Lechuga, Manzana"
+"ysmud","Ysmud","52.5","27","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Ysmud","Pequeña aldea entre árboles.<br><br><h1>VEGETACIÓN:</h1> Milenrama, Drupa de Mirlo</br>
+            <h1>MONSTRUOS:</h1> Mamarro, Garuba, Acantha<br>
+ <h1>ALIMENTOS:</h1> Setas, Manzana, Calabaza"
+"norrfen","Norrfen","60","25.5","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Norrfen","Ciudad situada en una explanada entre dos grandes zonas rocosas, por lo que tiene mucho tráfico de minería.<br><br><h1>VEGETACIÓN:</h1> Bejín</br>
+            <h1>MONSTRUOS:</h1> Acantha<br>
+ <h1>ALIMENTOS:</h1> Setas, Calabaza, Lechuga"
+"cuna-del-huerfano","Cuna del Huérfano","64","27","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Cuna del Huérfano","Cuenta la leyenda que aquí nació el primer Kal'arch, aquel que unificó las casas del norte y estabilizó la zona. Hijo huérfano, este muchacho recorrió todo el norte tratando de lograr un hogar digno y unificado para las gentes del invierno.<br><br><h1>MONSTRUOS:</h1> Acantha<br>
+ <h1>ALIMENTOS:</h1> Avena, Leche, Bayas"
+"el-desollado","El Desollado","69.5","26.5","<span class=""ra ra-spikeball"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>El Desollado","Aldea fronteriza con los territorios de las casas más céntricas del continente, se convirtió con rapidez en diana para conflictos territoriales. Con afán de evitar el derramamiento de sangre, los aldeanos colgaron a un soldado extrangero desollado en la entrada de la villa.<br><br><h1>MONSTRUOS:</h1> Grifo<br>
+ <h1>ALIMENTOS:</h1> Avena, Pimiento"
+"montes-urko","Montes Urko","72","18","<span class=""fas fa-mountain"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-mountain"" style=""font-size:20px;""></span>Montes Urko","Línea de montañas importantes en la minería norteña.<br><br><h1>VEGETACIÓN:</h1>Bejín, Espino de Hart, Pino del Diablo</br>
+            <h1>MINERALES:</h1>Hierro, Bronce, Cobre</br>
+            <h1>MONSTRUOS:</h1>Garuba, Espina Roja, Arpía, Lisovik"
+"castillo-viejo","Castillo Viejo","78.2","18","<span class=""fas fa-chess-rook"" style=""color:#a11011;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Castillo Viejo","Antiguo castillo, bastión del señor de Dos Picos, antigua región disputada entre los Kal'arch y los Reshk'arch.<br><br><h1>VEGETACIÓN:</h1>Drupa de Mirlo</br>
+            <h1>MONSTRUOS:</h1>Wyvern, Sirena"
+"isla-uzquiza","Isla Uzquiza","93.5","28","<span class=""ra ra-kaleidoscope"" style=""color:#ffa900;font-size:14px;"">
+            </span>","<span class=""ra ra-kaleidoscope"" style=""font-size:20px;""></span>Isla Uzquiza","Isla perteneciente a las tierras Reshk'arch. Anteño, la isla entera era el reino de Finore.<br><br><h1>VEGETACIÓN:</h1>Reina de la Noche, Cicuta<h1>MONSTRUOS:</h1>Basilisco, Sirena, Arpía, Quimera</br><h1>COMIDA:</h1>Baya, Carne de Caza"
+"bariande","Bariande","90.5","32.5","<span class=""fas fa-chess-rook"" style=""color:#ffa900;font-size:14px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Bariande","La única ciudad de la isla. El resto de la isla está llena de pequeñas tribus.<br><br><h1>VEGETACIÓN:</h1>Espino de Hart, Pino del Diablo, Yiacar, Acónito</br>            <h1>MONSTRUOS:</h1>Sirena, Arpía"
+"runeskar","Runeskar","73.5","27","<span class=""fas fa-chess-rook"" style=""color:#ffa900;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Runeskar","Ciudad de paso.<br><br>Ciudad fronteriza de tres facciones distintas. Se considera un asentamiento autoregido, ya que la cantidad de normativas  de las tres regiones se solapan mutuamente.<br><br><h1>VEGETACIÓN:</h1>Verbena, Pino del Diablo</br>            <h1>MONSTRUOS:</h1>Narvashji, Gallón, Acantha, Mamarro"
+"jardin-de-piedra","Jardín de Piedra","80.5","26.5","<span class=""fas fa-chess-rook"" style=""color:#ffa900;font-size:12px;"">
+            </span>","<span class=""fas fa-chess-rook"" style=""font-size:20px;""></span>Jardín de Piedra","En esta zona rocosa se encuentran unas antiguas ruinas cuyo origen se desconoce. Las ruinas del pueblo viejo se ven desde la superficie. Algunas de ellas se conectan por galerías subteráneas, pero cuentan con un difícil acceso.<br><br>El resto del pueblo, sin embargo, es una tranquila aldea de la zona de las Espinas de Piedra.<br><br><h1>VEGETACIÓN:</h1>Reina de la Noche, Espino de Hart, Arrayán Blanco, Bejín</br>            <h1>MONSTRUOS:</h1>Cocatriz, Las'kram, Vieszcy</br><h1>COMIDA:</h1>Carne de Caza"

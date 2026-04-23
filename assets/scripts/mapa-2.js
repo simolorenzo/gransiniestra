@@ -2,6 +2,73 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function localParseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const current = text[index];
+    const next = text[index + 1];
+
+    if (current === "\"") {
+      if (inQuotes && next === "\"") {
+        cell += "\"";
+        index += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (current === "," && !inQuotes) {
+      row.push(cell);
+      cell = "";
+    } else if ((current === "\n" || current === "\r") && !inQuotes) {
+      if (current === "\r" && next === "\n") {
+        index += 1;
+      }
+
+      row.push(cell);
+      if (row.some((value) => value.trim() !== "")) {
+        rows.push(row);
+      }
+
+      row = [];
+      cell = "";
+    } else {
+      cell += current;
+    }
+  }
+
+  if (cell.length || row.length) {
+    row.push(cell);
+    if (row.some((value) => value.trim() !== "")) {
+      rows.push(row);
+    }
+  }
+
+  const headers = rows.shift() || [];
+  return rows.map((columns) => {
+    const entry = {};
+    headers.forEach((header, columnIndex) => {
+      entry[header.trim()] = (columns[columnIndex] || "").trim();
+    });
+    return entry;
+  });
+}
+
+async function loadCsvRows(path) {
+  if (typeof fetchCsv === "function") {
+    return fetchCsv(path);
+  }
+
+  const response = await fetch(path, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`No se pudo cargar ${path}`);
+  }
+
+  return localParseCsv(await response.text());
+}
+
 function toggleOverlay(elementId, trigger) {
   const overlay = document.getElementById(elementId);
 
@@ -20,7 +87,7 @@ function createMapToolbar() {
   toolbar.innerHTML = `
     <div class="map-toolbar-copy">
       <span class="section-tag">Visor</span>
-      <p class="muted">Rueda o botón derecho para zoom. Arrastra con botón izquierdo para moverte.</p>
+      <p class="muted">Rueda o bot&oacute;n derecho para zoom. Arrastra con bot&oacute;n izquierdo para moverte.</p>
     </div>
     <div class="map-toolbar-actions">
       <button type="button" class="map-zoom-button" data-action="zoom-out" aria-label="Alejar">-</button>
@@ -44,9 +111,13 @@ function buildViewport(mapContainer) {
   children.forEach((node) => stage.appendChild(node));
 
   viewport.appendChild(stage);
-  mapContainer.append(createMapToolbar(), viewport);
+  mapContainer.replaceChildren(createMapToolbar(), viewport);
 
   return { viewport, stage };
+}
+
+function parsePercent(value) {
+  return Number.parseFloat(String(value).replace("%", "")) || 0;
 }
 
 function extractMarkerTitle(content) {
@@ -64,14 +135,19 @@ function renderSidebarDetail(sidebar, content) {
 
   if (!detail) {
     detail = document.createElement("section");
-    detail.className = "sidebar-detail detail-panel";
-    sidebar.appendChild(detail);
+    detail.className = "sidebar-section sidebar-detail detail-panel";
+    const collections = sidebar.querySelector(".sidebar-collections");
+    if (collections) {
+      sidebar.insertBefore(detail, collections);
+    } else {
+      sidebar.appendChild(detail);
+    }
   }
 
   if (!content) {
     detail.innerHTML = `
       <div class="section-tag">Lugar activo</div>
-      <p class="muted">Selecciona un icono del mapa para ver sus detalles aquí.</p>
+      <p class="muted">Selecciona un icono del mapa para ver sus detalles aqu&iacute;.</p>
     `;
     return;
   }
@@ -89,14 +165,10 @@ function renderSidebarDetail(sidebar, content) {
           ? `<div class="sidebar-detail-copy">${body.innerHTML}</div>`
           : intro
             ? `<div class="sidebar-detail-copy">${intro.innerHTML}</div>`
-            : `<p class="muted">Selecciona un icono del mapa para ver sus detalles aquí.</p>`
+            : `<p class="muted">Selecciona un icono del mapa para ver sus detalles aqu&iacute;.</p>`
       }
     </div>
   `;
-}
-
-function parsePercent(value) {
-  return Number.parseFloat(String(value).replace("%", "")) || 0;
 }
 
 function setupZoom(mapContainer, viewport, stage) {
@@ -128,22 +200,24 @@ function setupZoom(mapContainer, viewport, stage) {
     clampPosition();
     stage.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.zoom})`;
     mapContainer.style.setProperty("--map-zoom", state.zoom.toFixed(3));
+
     if (readout) {
-      readout.value = `${Math.round(state.zoom * 100)}%`;
-      readout.textContent = `${Math.round(state.zoom * 100)}%`;
+      const label = `${Math.round(state.zoom * 100)}%`;
+      readout.value = label;
+      readout.textContent = label;
     }
   };
 
   const zoomTo = (nextZoom, originX = viewport.clientWidth / 2, originY = viewport.clientHeight / 2) => {
-    const prevZoom = state.zoom;
+    const previousZoom = state.zoom;
     const zoom = clamp(nextZoom, state.minZoom, state.maxZoom);
 
-    if (zoom === prevZoom) {
+    if (zoom === previousZoom) {
       return;
     }
 
-    const contentX = (originX - state.x) / prevZoom;
-    const contentY = (originY - state.y) / prevZoom;
+    const contentX = (originX - state.x) / previousZoom;
+    const contentY = (originY - state.y) / previousZoom;
 
     state.zoom = zoom;
     state.x = originX - contentX * zoom;
@@ -169,6 +243,19 @@ function setupZoom(mapContainer, viewport, stage) {
     state.x = viewport.clientWidth / 2 - x * state.zoom;
     state.y = viewport.clientHeight / 2 - y * state.zoom;
     applyTransform();
+  };
+
+  const screenToMap = (clientX, clientY) => {
+    const rect = viewport.getBoundingClientRect();
+    const relativeX = clientX - rect.left;
+    const relativeY = clientY - rect.top;
+    const mapX = ((relativeX - state.x) / state.zoom / viewport.clientWidth) * 100;
+    const mapY = ((relativeY - state.y) / state.zoom / viewport.clientHeight) * 100;
+
+    return {
+      x: clamp(mapX, 0, 100),
+      y: clamp(mapY, 0, 100)
+    };
   };
 
   mapContainer.querySelectorAll("[data-action]").forEach((button) => {
@@ -248,6 +335,7 @@ function setupZoom(mapContainer, viewport, stage) {
     state.mode = null;
     viewport.classList.remove("is-dragging");
     viewport.classList.remove("is-zooming");
+
     if (event?.pointerId !== undefined) {
       viewport.releasePointerCapture(event.pointerId);
     }
@@ -264,7 +352,96 @@ function setupZoom(mapContainer, viewport, stage) {
   window.addEventListener("resize", applyTransform);
   applyTransform();
 
-  return { centerOnMarker, resetZoom };
+  return { centerOnMarker, resetZoom, screenToMap };
+}
+
+function readLegacyMarkers(mapLayer) {
+  return Array.from(mapLayer.querySelectorAll(".lugar1"))
+    .map((marker, index) => {
+      const label = marker.querySelector("label");
+      const content = marker.querySelector(".contentlugar");
+      const titleNode = content?.querySelector(".descriptitulo");
+      const bodyNode = content?.querySelector(".descrip");
+
+      if (!label || !content || !titleNode) {
+        return null;
+      }
+
+      return {
+        id: marker.querySelector("input")?.id || `mapa-punto-${index + 1}`,
+        title: titleNode.textContent.trim(),
+        x: parsePercent(label.style.left),
+        y: parsePercent(label.style.top),
+        marker_html: label.innerHTML.trim(),
+        title_html: titleNode.innerHTML.trim(),
+        body_html: bodyNode?.innerHTML.trim() || "",
+        source: "legacy"
+      };
+    })
+    .filter(Boolean)
+    .filter((marker) => marker.title && marker.title !== "Explora el mundo dándole click a los iconos en el mapa para ver su información, diviértete!");
+}
+
+function normalizeMarkerRow(row, index) {
+  const x = Number.parseFloat(String(row.x).replace(",", ".")) || 0;
+  const y = Number.parseFloat(String(row.y).replace(",", ".")) || 0;
+
+  return {
+    id: row.id || `mapa-punto-${index + 1}`,
+    title: row.title || `Punto ${index + 1}`,
+    x,
+    y,
+    marker_html: row.marker_html || '<span class="fas fa-map-marker-alt"></span>',
+    title_html: row.title_html || row.title || `Punto ${index + 1}`,
+    body_html: row.body_html || "",
+    source: "csv"
+  };
+}
+
+async function getMarkerData(mapLayer) {
+  const legacyMarkers = readLegacyMarkers(mapLayer);
+
+  try {
+    const rows = await loadCsvRows("./data/mapa-puntos.csv");
+    if (!rows.length) {
+      return legacyMarkers;
+    }
+
+    return rows.map(normalizeMarkerRow);
+  } catch (error) {
+    console.warn("No se pudo cargar data/mapa-puntos.csv. Uso los puntos embebidos del HTML.", error);
+    return legacyMarkers;
+  }
+}
+
+function ensureMapLayer(stage) {
+  let mapLayer = stage.querySelector(".lugar");
+
+  if (!mapLayer) {
+    mapLayer = document.createElement("div");
+    mapLayer.className = "lugar";
+    stage.appendChild(mapLayer);
+  }
+
+  return mapLayer;
+}
+
+function renderMarkers(mapLayer, markers) {
+  mapLayer.innerHTML = markers
+    .map((marker, index) => {
+      const inputId = `map-marker-${index + 1}`;
+      return `
+        <div class="lugar1" data-marker-id="${marker.id}">
+          <input type="radio" name="tabthree-group-3" id="${inputId}">
+          <label for="${inputId}" style="top:${marker.y}%;left:${marker.x}%;">${marker.marker_html}</label>
+          <div class="contentlugar">
+            <div class="descriptitulo">${marker.title_html}</div>
+            <div class="descrip">${marker.body_html}</div>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
 }
 
 function enhanceMarkers(mapContainer, sidebar, zoomApi) {
@@ -345,7 +522,84 @@ function bindOverlayToggles() {
   });
 }
 
-function initializeMapPage() {
+function moveCollectionsIntoSidebar(sidebar) {
+  const recol = document.querySelector(".recol");
+  if (!recol || sidebar.querySelector(".sidebar-collections")) {
+    return;
+  }
+
+  const panel = document.createElement("section");
+  panel.className = "sidebar-section sidebar-collections";
+  panel.innerHTML = `
+    <div class="section-tag">Puntos de recolecci&oacute;n</div>
+    <p class="muted">Las capas siguen funcionando, pero ahora viven dentro del lateral para que el mapa quede limpio.</p>
+  `;
+
+  panel.appendChild(recol);
+  sidebar.appendChild(panel);
+}
+
+function ensureCoordinateEditor(sidebar) {
+  let editor = sidebar.querySelector(".map-editor");
+
+  if (!editor) {
+    editor = document.createElement("section");
+    editor.className = "sidebar-section map-editor";
+    editor.innerHTML = `
+      <div class="section-tag">Editor de coordenadas</div>
+      <p class="muted">Activa el modo y haz click en el mapa para sacar coordenadas en porcentaje listas para el CSV.</p>
+      <button type="button" class="map-editor-toggle" aria-pressed="false">Activar modo coordenadas</button>
+      <div class="map-editor-output">
+        <div class="map-editor-pair"><span>X</span><strong data-map-x>--</strong></div>
+        <div class="map-editor-pair"><span>Y</span><strong data-map-y>--</strong></div>
+      </div>
+      <code class="map-editor-code" data-map-row>id,nombre,x,y,marker_html,title_html,body_html</code>
+    `;
+    sidebar.appendChild(editor);
+  }
+
+  const toggle = editor.querySelector(".map-editor-toggle");
+  const xNode = editor.querySelector("[data-map-x]");
+  const yNode = editor.querySelector("[data-map-y]");
+  const rowNode = editor.querySelector("[data-map-row]");
+
+  const state = { active: false };
+
+  toggle?.addEventListener("click", () => {
+    state.active = !state.active;
+    editor.classList.toggle("is-active", state.active);
+    toggle.setAttribute("aria-pressed", String(state.active));
+    toggle.textContent = state.active ? "Desactivar modo coordenadas" : "Activar modo coordenadas";
+  });
+
+  return {
+    isActive() {
+      return state.active;
+    },
+    update(point) {
+      xNode.textContent = point.x.toFixed(2);
+      yNode.textContent = point.y.toFixed(2);
+      rowNode.textContent = `nuevo-punto,Nuevo punto,${point.x.toFixed(2)},${point.y.toFixed(2)},"<span class=""fas fa-map-marker-alt""></span>","Nuevo punto","Describe aqu&iacute; el lugar"`;
+    }
+  };
+}
+
+function bindCoordinateCapture(viewport, zoomApi, editor) {
+  if (!viewport || !zoomApi || !editor) {
+    return;
+  }
+
+  viewport.addEventListener("click", (event) => {
+    if (!editor.isActive() || event.target.closest(".map-toolbar")) {
+      return;
+    }
+
+    const point = zoomApi.screenToMap(event.clientX, event.clientY);
+    editor.update(point);
+  });
+}
+
+async function initializeMapPage() {
   const mapContainer = document.querySelector(".map-container");
   const sidebar = document.querySelector(".sidebar");
 
@@ -354,15 +608,27 @@ function initializeMapPage() {
   }
 
   try {
+    moveCollectionsIntoSidebar(sidebar);
+
     const { viewport, stage } = buildViewport(mapContainer);
     mapContainer.classList.add("is-enhanced");
-    const zoomApi = setupZoom(mapContainer, viewport, stage);
 
-    bindOverlayToggles();
+    const zoomApi = setupZoom(mapContainer, viewport, stage);
+    const mapLayer = ensureMapLayer(stage);
+    const markers = await getMarkerData(mapLayer);
+
+    renderMarkers(mapLayer, markers);
+    renderSidebarDetail(sidebar, null);
     enhanceMarkers(mapContainer, sidebar, zoomApi);
+    bindOverlayToggles();
+
+    const editor = ensureCoordinateEditor(sidebar);
+    bindCoordinateCapture(viewport, zoomApi, editor);
   } catch (error) {
     console.error("No se pudo inicializar el visor del mapa.", error);
   }
 }
 
-document.addEventListener("DOMContentLoaded", initializeMapPage);
+document.addEventListener("DOMContentLoaded", () => {
+  initializeMapPage();
+});

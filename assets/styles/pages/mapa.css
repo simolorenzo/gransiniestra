@@ -29,7 +29,7 @@ body {
 
 .map-layout {
   display: grid;
-  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
   gap: 24px;
   align-items: start;
 }
@@ -50,6 +50,10 @@ body {
   text-align: left;
 }
 
+.sidebar > * + * {
+  margin-top: 22px;
+}
+
 .sidebar h2 {
   margin: 0 0 12px;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
@@ -59,8 +63,8 @@ body {
   margin: 0;
 }
 
+.sidebar-section,
 .sidebar-detail {
-  margin-top: 22px;
   padding: 18px;
   border-radius: var(--radius-lg);
   background: rgba(0, 0, 0, 0.22);
@@ -299,6 +303,82 @@ body {
 
 .recol {
   padding: 22px;
+}
+
+.sidebar-collections .recol {
+  margin-top: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.sidebar-collections .map-tabs > section {
+  padding-top: 14px;
+}
+
+.map-editor-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 14px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.map-editor-toggle:hover,
+.map-editor.is-active .map-editor-toggle {
+  border-color: rgba(218, 68, 68, 0.38);
+  background: rgba(218, 68, 68, 0.14);
+  transform: translateY(-1px);
+}
+
+.map-editor-output {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.map-editor-pair {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.map-editor-pair span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.map-editor-pair strong {
+  font-size: 1.1rem;
+}
+
+.map-editor-code {
+  display: block;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(5, 5, 5, 0.74);
+  color: #f4d8d8;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .map-tabs > input[type="radio"] {
